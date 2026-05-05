@@ -1,0 +1,14 @@
+# Gradle 배포 설정 예제 파일
+# 이 파일을 복사하여 gradle.properties 로 저장하고 실제 경로로 수정하세요.
+#
+# 외부 Tomcat 으로 WAR 배포(gradle deploy) 를 사용하지 않고
+# standalone(java -jar) 으로만 실행한다면 이 파일은 필요하지 않습니다.
+
+# Apache Tomcat 11 설치 경로 (Windows 예: C:\\apache-tomcat-11.0.2, Linux 예: /opt/apache-tomcat-11.0.2)
+tomcat.path=/path/to/apache-tomcat-11.0.2
+
+# user_files 디렉토리 경로 (배포 시 webapp 안에 심볼릭 링크/junction 으로 연결)
+user.files.path=${projectDir}/data/user_files
+
+# 배포용 WEB-INF 디렉토리 (서버 환경별 설정 파일 포함, 기본값으로 충분)
+deploy.webinf.path=gradle/deploy/WEB-INF

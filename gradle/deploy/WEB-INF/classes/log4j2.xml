@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <!-- 로그 출력 방식 -->
+    <Appenders>
+        <!-- 콘솔 출력 방식 -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
+        </Console>
+        
+        <!-- 파일 저장 방식 -->
+        <File name="FILE_AUTH" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_AUTH.log">
+              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
+        </File>
+        <File name="FILE_COMM" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_COMM.log">
+              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
+        </File>
+        <!-- FTP 패키지 전용 로그 파일 -->
+        <File name="FILE_FTP" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_FTP.log">
+              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
+        </File>
+    </Appenders>
+    
+    <Loggers>
+		<!-- 로깅 레벨 : FATAL > ERROR > WARN > INFO > DEBUG -->
+        <Logger name = "com.omnibuscode.auth"  level="INFO" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_AUTH"/>
+        </Logger>
+		<Logger name = "com.omnibuscode"  level="ERROR" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_COMM"/>
+        </Logger>
+        <Logger name = "com.omnibuscode.ctrl"  level="INFO" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_COMM"/>
+        </Logger>
+        <Logger name = "com.omnibuscode.base"  level="INFO" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_COMM"/>
+        </Logger>
+		<!--
+        <Logger name = "com.omnibuscode.dao"  level="DEBUG" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_COMM"/>
+        </Logger>
+		-->
+        <!-- FTP 관련 패키지 전용 로거 (com.omnibuscode.logic보다 먼저 정의하여 우선 매칭) -->
+        <Logger name = "com.omnibuscode.ftp"  level="DEBUG" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_FTP"/>
+        </Logger>
+        <!-- 장보고 FTP 파일 처리 패키지 전용 로거 (com.omnibuscode.logic보다 먼저 정의하여 우선 매칭) -->
+        <Logger name = "com.omnibuscode.logic.jbg.ftp"  level="DEBUG" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_FTP"/>
+        </Logger>
+        <Logger name = "com.omnibuscode.logic"  level="DEBUG" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_COMM"/>
+        </Logger>
+        <Logger name = "com.omnibuscode.util"  level="DEBUG" additivity = 'false'>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="FILE_COMM"/>
+        </Logger>
+    </Loggers>
+</Configuration>

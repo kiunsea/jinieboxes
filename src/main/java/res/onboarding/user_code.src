@@ -1,0 +1,19 @@
+function userstep() {
+	const currentURL = window.location.href;
+	const lastSlashIndex = currentURL.lastIndexOf('/');
+	var pageName = currentURL.substring(lastSlashIndex + 1);
+	
+	if (pageName.indexOf('%PAGE%') > -1) {
+		const driver = window.driver.js.driver;
+	    const driverObj = driver({
+	        showProgress: true,
+	        steps: %STEPS%
+	    });
+	    driverObj.drive();
+	} else {
+		if (confirm("페이지를 이동하여 다시 문의해 주세요")) {
+			var target_page = currentURL.substring(0, lastSlashIndex + 1) + '%PAGE%';
+			window.location.assign(target_page);
+		}
+	}
+};

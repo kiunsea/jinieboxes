@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="template/navbar/css/styles.css" rel="stylesheet" />
+    <title>JINIEBOX 박스 추가(with Bixby)</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+    </style>
+</head>
+
+<body class="p-3 m-0 border-0 bd-example">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="input-form-backgroud row">
+            <div class="input-form col-md-12 mx-auto">
+                <h4 class="mb-3">박스 추가</h4>
+                <form class="validation-form" novalidate>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="name">박스명</label>
+                                <input type="text" class="form-control" id="bname" placeholder="" value="" required>
+                                <div class="invalid-feedback">
+                                    박스 이름을 입력해주세요.
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="name">설명</label>
+                                <textarea class="form-control" aria-label="With textarea" id="bdetail"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4"></div>
+                    <button id="btn_signup" class="btn btn-primary btn-lg btn-block" type="button">추가 신청</button>
+                </form>
+            </div>
+        </div>
+        <footer class="my-3 text-center text-small">
+            <p class="mb-1 fs-3 fw-bold">&copy; JINIEBOX</p>
+            <p class="fs-6 text-black-50">(OMNIBUSCODE)</p>
+        </footer>
+
+        <script type="text/javascript">
+            document.querySelector("#btn_signup").addEventListener('click', function (event) {
+                var val_bname = document.querySelector("#bname").value;
+                var val_bdetail = document.querySelector("#bdetail").value;
+
+                if (!val_bname) {
+                    alert("박스 이름을 입력해주세요");
+                    return -1;
+                }
+
+                var path = "/jiniebox/box";
+                var param = "cmd=add";
+                param += "&buid=" + urlparam("buid");
+                param += "&authcode=" + urlparam("authcode");
+                param += "&seq_store=" + urlparam("seq_store");
+                param += "&bname=" + val_bname;
+                param += "&bdetail=" + val_bdetail;
+                request(path, param);
+            }, false);
+
+            function urlparam(name) {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                if (!urlParams.has(name)) { return false; }
+                return urlParams.get(name);
+            }
+
+            /**
+             * path : 요청받을 서비스페이지
+             * params : 전송할 데이터 (name1=value1&name2=value2&name3=value3)    
+             */
+            function request(path, params) {
+                var _ajax = new XMLHttpRequest();
+                _ajax.onreadystatechange = function () {
+                    if (checkAjaxSuc(_ajax)) {
+                        var resMsg = _ajax.responseText;
+                        if (resMsg.length > 0) alert(resMsg);
+                    }
+                };
+
+                // POST 방식으로 요청시
+                _ajax.open("POST", path);
+                _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                try {
+                    _ajax.send(params);
+                } catch (e) {
+                    if (e.message && e.message.indexOf("0x80004005") > -1) {
+                        return;
+                    }
+                }
+            }
+
+            function checkAjaxSuc(ajax) {
+                if (ajax.readyState == 4) {
+                    try {
+                        return (ajax.status >= 200 && ajax.status < 300);
+                    } catch (ignore) {
+                        return false;
+                    }
+                }
+                return false;
+            }
+        </script>
+    </div>
+</body>
+
+</html>

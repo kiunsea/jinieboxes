@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="auto">
+
+<head>
+    <script src="./res/web/bootstrap/ext/vanillajs-datepicker@1.3.2/datepicker-full.min.js"></script>
+	<script src="./res/web/bootstrap/ext/vanillajs-datepicker@1.3.2/locales/ko.js"></script>
+    <script src="./res/web/color-modes.js"></script>
+    <script src="./res/web/jiniebox.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="jiniebox">
+    <meta name="generator" content="">
+    <title>JINIEBOX 나눔 목록</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
+
+    <link href="./res/web/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./res/web/bootstrap/ext/vanillajs-datepicker@1.3.2/datepicker-bs5.min.css">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/apple-touch-icon.png"
+        sizes="180x180">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32"
+        type="image/png">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon-16x16.png" sizes="16x16"
+        type="image/png">
+    <link rel="manifest" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/safari-pinned-tab.svg"
+        color="#712cf9">
+    <link rel="icon" href="https://getbootstrap.com/docs/5.3/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#712cf9">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="./res/web/dashboard.css" rel="stylesheet">
+    <style data-emotion="css" data-s=""></style>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md" id="jb_nav"></nav>
+    <script>importHTML("/jbs/jb_nav.html", 'jb_nav', checkLogin);</script>
+    
+    <div class="nav-scroller bg-body shadow-sm">
+        <nav class="nav" aria-label="Secondary navigation">
+            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+            <a class="nav-link" href="#">
+                Friends
+                <span class="badge text-bg-light rounded-pill align-text-bottom">27</span>
+            </a>
+            <a class="nav-link" href="#">Explore</a>
+            <a class="nav-link" href="#">Suggestions</a>
+            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Link</a>
+        </nav>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z">
+            </path>
+        </symbol>
+        <symbol id="circle-half" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+        </symbol>
+        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+            <path
+                d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z">
+            </path>
+            <path
+                d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
+            </path>
+        </symbol>
+        <symbol id="sun-fill" viewBox="0 0 16 16">
+            <path
+                d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
+            </path>
+        </symbol>
+    </svg>
+
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+	
+        <!-- 리스트 상단 -->
+        <button type="button" class="btn btn-outline-primary py-2 d-flex" id="btn_list_top">△</button>
+        <script>
+            window.document.querySelector("#btn_list_top").addEventListener('click', () => {
+                window.scrollTo(0, 0);
+            }, false);
+        </script>
+
+        <!-- 아이템 추가 버튼 -->
+		<button id="btn_item_add" type="button" class="btn btn-outline-primary py-2 d-flex" data-bs-toggle="modal" data-bs-target="#showAddItemModal">┼</button>
+
+        <!-- 아이템 목록 펼치기/접기 버튼 -->
+		<button id="btn_list_collapse" type="button" class="btn btn-outline-primary py-2 d-flex" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="">▤</button>
+
+        <!-- 테마 변경 버튼 -->
+        <button class="btn btn-outline-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
+            aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (light)">
+            <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+                <use href="#sun-fill"></use>
+            </svg>
+            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light"
+                    aria-pressed="true">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                        <use href="#sun-fill"></use>
+                    </svg>
+                    Light
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+                    aria-pressed="false">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                        <use href="#moon-stars-fill"></use>
+                    </svg>
+                    Dark
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"
+                    aria-pressed="false">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+                        <use href="#circle-half"></use>
+                    </svg>
+                    Auto
+                    <svg class="bi ms-auto d-none" width="1em" height="1em">
+                        <use href="#check2"></use>
+                    </svg>
+                </button>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+                <hr class="mb-3">
+                <div class="container">
+                    <h2>나눔 목록</h2>
+                    <div class="row" id="card-row"></div>
+                </div>
+                
+                <input type="text" id="modal_item_mode" value="ADD" hidden>
+                <input type="text" id="modal_box_seq" hidden>
+                <input type="text" id="modal_item_seq" hidden>
+                <div id="showAddItemModal" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="addItemModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div>
+                                    <h5 class="modal-title" id="addItemModal">아이템 추가</h5>
+                                </div>
+                                <button type="button" class="btn-close" aria-label="Close"
+                                    data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <button class="nav-link active" id="nav-barcode-tab" data-bs-toggle="tab" data-bs-target="#nav-barcode" type="button"
+                                            role="tab" aria-controls="nav-barcode" aria-selected="true">아이템등록</button>
+                                        <button class="nav-link" id="nav-receipt-tab" data-bs-toggle="tab" data-bs-target="#nav-receipt" type="button"
+                                            role="tab" aria-controls="nav-receipt" aria-selected="false">영수증스캔</button>
+                                    </div>
+                                </nav>
+
+                                <div class="tab-content" id="nav-tabContent">
+                                    <!-- 아이템 바코드 스캔 입력 시작 -->
+                                    <div id="nav-barcode" class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-barcode-tab" tabindex="0">
+                                        <div class="input-group mb-2">
+                                            <video id="video" width="100%" height="100%" style="border: 1px solid gray" controls></video>
+                                        </div>
+                                        <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+                                        <script>
+                                            function barcodeScanInit() {
+                                                const codeReader = window.document.barcodeReader = new ZXing.BrowserMultiFormatReader();
+                                                console.log('ZXing code reader initialized');
+                                                codeReader.listVideoInputDevices()
+                                                    .then((videoInputDevices) => {
+                                                            if (videoInputDevices.length >= 1) {
+                                                                videoInputDevices.forEach((element) => {
+                                                                    if (element.label.indexOf("back") > -1) {
+                                                                        window.document.cameraId = element.deviceId;
+                                                                    }
+                                                                })
+                                                            }
+                                                    })
+                                                    .catch((err) => {
+                                                        console.error(err)
+                                                    });
+                                            };
+
+                                            function barcodeCameraOn() {
+												
+                                                const codeReader = window.document.barcodeReader;
+                                                const cameraId = window.document.cameraId;                                                
+
+                                                const elem_video = window.document.querySelector("#video");
+                                                elem_video.style.width = '100%';
+                                                elem_video.style.height = '100%';
+                                                elem_video.style.display = "block";
+												
+                                                //입력 장치 설정후 스캔 결과를 출력
+                                                codeReader.decodeFromVideoDevice(cameraId, 'video', (result, err) => {
+                                                    if (result) {
+                                                        console.log(result)
+                                                        document.getElementById('aimd_input_barcode').value = result.text
+                                                        var path = "/jbs/extsvc";
+                                                        var params = "cmd=getProductdName";
+                                                        params += "&buid=" + urlparam("buid");
+                                                        params += "&authcode=" + urlparam("authcode");
+                                                        params += "&barcode=" + result.text;
+
+                                                        var _ajax = new XMLHttpRequest();
+                                                        _ajax.onreadystatechange = function () {
+                                                            if (checkAjaxSuc(_ajax)) {
+                                                                var resMsg = _ajax.responseText;
+                                                                if (resMsg.length > 0) {
+                                                                    //alert(resMsg); 
+                                                                    let resJo = JSON.parse(resMsg);
+                                                                    if (resJo.code == '000') {
+                                                                        document.querySelector("#aimd_input_itemname").value = resJo.item_name;
+                                                                    } else if (resJo.msg) {
+                                                                        alert(resJo.msg)
+                                                                    }
+                                                                }
+                                                            }
+                                                        };
+                                                        sendPost(_ajax, path, params);
+                                                    }
+                                                    if (err && !(err instanceof ZXing.NotFoundException)) {
+                                                        console.error(err)
+                                                        document.getElementById('aimd_input_barcode').value = err
+                                                    }
+                                                }).catch((err) => {
+                                                    console.error(err)
+                                                });
+                                                console.log(`Started continous decode from camera with id ${cameraId}`);
+                                                console.log('바코드 카메라 켜짐');
+                                            }
+
+                                            function barcodeCameraOff() {
+
+												const codeReader = window.document.barcodeReader;                                                
+                                                const elem_video = window.document.querySelector("#video");
+                                                elem_video.width = 0;
+                                                elem_video.height = 0;
+                                                elem_video.style.display = "none";
+
+                                                if (!codeReader || !codeReader.reset) return -1; //실행취소
+
+                                                codeReader.reset();
+                                                document.getElementById('aimd_input_barcode').value = '';
+                                                console.log('바코드 카메라 꺼짐');
+                                            }
+
+                                            //바코드카메라 초기화
+                                            barcodeCameraOff();
+                                            window.document.bctoggle = false;
+                                        </script>
+                                        <div class="input-group mb-2">
+                                            <span id="barcode_toggle" class="btn btn-primary">바코드</span>
+                                            <input type="text" class="form-control" placeholder="스캔하려면 바코드 버튼을 터치" id="aimd_input_barcode" readonly>
+                                                <script>
+                                                    window.document.querySelector("#barcode_toggle").addEventListener('click', () => {
+                                                        if (window.document.bctoggle) {
+                                                            barcodeCameraOff();
+                                                            window.document.bctoggle = false;
+                                                        } else {
+                                                            barcodeCameraOn();
+                                                            window.document.bctoggle = true;
+                                                        }
+                                                    }, false);
+                                                </script>
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <span class="input-group-text">이름</span><input type="text"
+                                                class="form-control" placeholder="아이템명"
+                                                id="aimd_input_itemname">
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <span class="input-group-text">수량</span>
+                                            <input type="text" class="form-control" placeholder="1" id="aimd_input_qty">
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <span class="input-group-text">박스</span><input type="text"
+                                                class="form-control" placeholder="박스명"
+                                                id="aimd_input_boxname">
+                                        </div>
+                                        <div class="input-group mb-2" id="aimd_div_insd">
+                                            <span class="input-group-text">저장일자</span>
+                                            <input type="text" class="form-control date datepicker-input"
+                                                id="aimd_input_insd" value="." disabled>
+                                        </div>
+                                        <div class="input-group mb-2">
+                                            <span class="input-group-text">만료일자</span>
+                                            <input type="text" class="form-control date datepicker-input"
+                                                id="aimd_input_expd" value=".">
+                                        </div>
+                                        <!-- 아이템 이미지 출력 시작 -->
+                                        <div class="input-group mb-2">
+                                            <span id="aimd_span_itemimage" class="input-group-text">사진</span>
+                                            <input id="aimd_input_itemimages" type="file" multiple="multiple" class="form-control" placeholder="이미지" accept="image/*">
+                                            <button id="aimd_btn_addimg" class="btn btn-outline-secondary" type="button">사진추가</button>
+                                        </div>
+<!-- #img slide template start#--
+                                                            <div id="aimd_imgs" class="carousel slide">
+                                                                <div class="carousel-indicators">
+                                                                    <button type="button" data-bs-target="#aimd_imgs" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                                                    <button type="button" data-bs-target="#aimd_imgs" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                                    <button type="button" data-bs-target="#aimd_imgs" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                                                </div>
+                                                                <div class="carousel-inner">
+                                                                    <div class="carousel-item active">
+                                                                        <img src="/107/345.jpg" class="d-block w-100" alt="...">
+                                                                    </div>
+                                                                    <div class="carousel-item">
+                                                                        <img src="/107/234.jpg" class="d-block w-100" alt="...">
+                                                                    </div>
+                                                                    <div class="carousel-item">
+                                                                        <img src="/107/123.png" class="d-block w-100" alt="...">
+                                                                    </div>
+                                                                </div>
+                                                                <button class="carousel-control-prev" type="button" data-bs-target="#aimd_imgs" data-bs-slide="prev">
+                                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                    <span class="visually-hidden">Previous</span>
+                                                                </button>
+                                                                <button class="carousel-control-next" type="button" data-bs-target="#aimd_imgs" data-bs-slide="next">
+                                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                    <span class="visually-hidden">Next</span>
+                                                                </button>
+                                                            </div>
+-- #img slide template end#-->
+                                        <div id="aimd_imgs" class="carousel slide mb-2">
+                                            <div id="aimd_car_indi" class="carousel-indicators">
+                                            </div>
+                                            <div id="aimd_car_inne" class="carousel-inner">
+                                            </div>
+                                            <button class="carousel-control-prev" type="button" data-bs-target="#aimd_imgs" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button" data-bs-target="#aimd_imgs" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                        <!-- 동작안함 button id="aimd_btn_itemimg_addpop" type="button" class="btn btn-outline-secondary"
+                                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                                            data-bs-toggle="modal" data-bs-target="#showAddItemImgsModal">사진추가</button>&nbsp;-->
+                                        <button id="aimd_btn_delimg" type="button" class="btn btn-outline-secondary"
+                                            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">사진삭제</button>
+                                        <!-- 동작안함 div id="showAddItemImgsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="itemimgsModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div>
+                                                            <h5 class="modal-title" id="itemimgsModalLabel">아이템 사진 추가</h5>
+                                                        </div>
+                                                        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="input-group mb-2">
+                                                            <input id="input_itemimages" type="file" multiple="multiple" class="form-control" placeholder="이미지" accept="image/*">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary"
+                                                            id="btn_add_itemimg">추가</button>
+                                                        <button type="button" class="btn btn-secondary" id="btn_cancel_itemimg"
+                                                            data-bs-dismiss="modal">닫기</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div-->
+                                        <script>
+                                            /**
+                                             * 아이템 이미지 추가
+                                             */
+                                            window.document.querySelector("#aimd_btn_addimg").addEventListener('click', () => {
+                                                const _doc = window.document;
+
+                                                if (_doc.querySelector("#aimd_input_itemimages").files.length < 1) {
+                                                    alert("이미지가 지정되지 않았습니다");
+                                                    return -1;
+                                                }
+
+                                                let seq_box = _doc.querySelector("#modal_box_seq").value;
+                                                let seq_item = _doc.querySelector("#modal_item_seq").value;
+
+                                                var path = "/jbs/item";
+                                                const params = new Array();
+                                                params.push({ name: "cmd", value: "addImg" });
+                                                params.push({ name: "buid", value: urlparam("buid") });
+                                                params.push({ name: "authcode", value: urlparam("authcode") });
+                                                params.push({ name: "seq_item", value: seq_item });
+
+                                                var _ajax = new XMLHttpRequest();
+                                                _ajax.onreadystatechange = function () {
+                                                    if (checkAjaxSuc(_ajax)) {
+                                                        var resMsg = _ajax.responseText;
+                                                        if (resMsg.length > 0) {
+                                                            let resJson = JSON.parse(resMsg);
+                                                            var alertMsg = null;
+                                                            if (resJson.code == "000") {
+                                                                //팝업창 초기화
+                                                                _doc.querySelector("#aimd_input_itemimages").value = "";
+                                                                
+                                                                var item = _doc.boxes[seq_box].items[seq_item];
+                                                                item.imgs = resJson.imgs;
+                                                                showItemImages(item);
+                                                                alertMsg = resJson.msg;
+                                                            } else {
+                                                                alertMsg = "* code : " + resJson.code + " (" + resJson.msg + ")\n* 입력값을 확인하여 주세요";
+                                                            }
+                                                            alert(alertMsg);
+                                                        }
+                                                    }
+                                                };
+
+                                                sendMultipart(_ajax,
+                                                    path,
+                                                    _doc.querySelector("#aimd_input_itemimages").files,
+                                                    params);
+                                            }, false);
+
+                                            /**
+                                             *  아이템 이미지 삭제
+                                             */
+                                            window.document.querySelector("#aimd_btn_delimg").addEventListener('click', () => {
+                                                if (!confirm("현재 이미지를 삭제합니까?")) {
+                                                    return -1;
+                                                }
+
+                                                const _doc = window.document;
+                                                let seq_box = _doc.querySelector("#modal_box_seq").value;
+                                                let seq_item = _doc.querySelector("#modal_item_seq").value;
+
+                                                const activeItem = document.querySelector('#aimd_imgs>.carousel-inner>.carousel-item.active');
+                                                var imgsrc = activeItem.firstChild.src;
+
+                                                var path = "/jbs/item";
+                                                var params = "cmd=delImg";
+                                                params += "&buid=" + urlparam("buid");
+                                                params += "&authcode=" + urlparam("authcode");
+                                                params += "&seq_box=" + seq_box;
+                                                params += "&seq_item=" + seq_item;
+                                                params += "&imgsrc=" + imgsrc;
+
+                                                var _ajax = new XMLHttpRequest();
+                                                _ajax.onreadystatechange = function () {
+                                                    if (checkAjaxSuc(_ajax)) {
+                                                        var resMsg = _ajax.responseText;
+                                                        if (resMsg.length > 0) {
+                                                            //alert(resMsg); 
+                                                            let resJo = JSON.parse(resMsg);
+                                                            if (resJo.code == '000') {
+                                                                var item = _doc.boxes[seq_box].items[seq_item];
+                                                                item.imgs = resJo.imgs;
+                                                                showItemImages(item);
+                                                            }
+                                                            alert(resJo.msg)
+                                                        }
+                                                    }
+                                                };
+                                                sendPost(_ajax, path, params);
+                                            }, false);
+
+                                            function showItemImages(item) { // 아이템 이미지를 출력 및 갱신
+                                                const _doc = window.document;
+
+                                                let imgs = item.imgs;
+                                                if (imgs && imgs.length > 0) {
+                                                    _doc.querySelector("#aimd_imgs").hidden = false;
+                                                    _doc.querySelector("#aimd_btn_delimg").hidden = false;
+                                                    var img_cindi = _doc.querySelector("#aimd_car_indi");
+                                                    var img_cinne = _doc.querySelector("#aimd_car_inne");
+                                                    img_cindi.innerHTML = img_cinne.innerHTML = "";
+                                                    
+                                                    var cnt_btn = 0;
+                                                    for (img of imgs) {
+                                                        let btn_slide = _doc.createElement("button");
+                                                        btn_slide.setAttribute("type", "button");
+                                                        btn_slide.setAttribute("data-bs-target", "#aimd_imgs");
+                                                        btn_slide.setAttribute("data-bs-slide-to", "" + cnt_btn);
+                                                        btn_slide.setAttribute("aria-label", "Slide " + cnt_btn);
+                                                        if (cnt_btn == 0) {
+                                                            btn_slide.className = "active";
+                                                            btn_slide.setAttribute("aria-current", "true");
+                                                        }
+                                                        img_cindi.appendChild(btn_slide);
+
+                                                        let div_car_itm = _doc.createElement("div");
+                                                        if (cnt_btn == 0) {
+                                                            div_car_itm.className = "carousel-item active";
+                                                        } else {
+                                                            div_car_itm.className = "carousel-item";
+                                                        }
+                                                        let img_car_itm = _doc.createElement("img");
+                                                        img_car_itm.src = img;
+                                                        img_car_itm.className = "d-block w-100";
+                                                        img_car_itm.setAttribute("alt", "...");
+
+                                                        div_car_itm.appendChild(img_car_itm);
+                                                        img_cinne.appendChild(div_car_itm);
+
+                                                        cnt_btn++;
+                                                    }
+                                                } else {
+                                                    _doc.querySelector("#aimd_imgs").hidden = true;
+                                                    _doc.querySelector("#aimd_btn_delimg").hidden = true;
+                                                }
+                                            }
+                                        </script>
+                                        <!-- 아이템 이미지 출력 끝 -->
+                                    </div>
+                                    <!-- 아이템 바코드 스캔 입력 끝 -->
+                                    <div class="tab-pane fade" id="nav-receipt" role="tabpanel" aria-labelledby="nav-receipt-tab" tabindex="0">
+                                        ...
+                                    </div>
+                                </div>
+
+                                <input class="form-check-input" type="checkbox" id="aimd_add_continue">
+                                <label for="sname" id="aimd_add_cont_label">계속 입력</label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary"
+                                    id="aimd_btn_add">추가</button>
+                                <button type="button" class="btn btn-primary"
+                                    id="aimd_btn_mod">수정</button>
+                                <button type="button" class="btn btn-primary"
+                                    id="aimd_btn_del">삭제</button>
+                                <button type="button" class="btn btn-secondary" id="aimd_btn_cancel"
+                                    data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    showDatepicker(document.querySelector('#aimd_input_expd'));
+                    /**
+                     * 아이템 추가 팝업
+                     */
+                    window.document.querySelector("#btn_item_add").addEventListener('click', () => {
+                        const _doc = window.document;
+                        _doc.querySelector("#modal_item_mode").value = "ADD";
+                        _doc.querySelector("#modal_box_seq").value = "";
+                        _doc.querySelector("#modal_item_seq").value = "";
+                        _doc.querySelector("#addItemModal").innerText = "아이템 추가";
+                        _doc.querySelector("#aimd_input_boxname").value = "";
+                        _doc.querySelector("#aimd_input_itemname").value = "";
+                        _doc.querySelector("#aimd_input_qty").value = "1";
+                        _doc.querySelector("#aimd_input_expd").value = "";
+                        _doc.querySelector("#aimd_add_continue").checked = false;
+                        _doc.querySelector("#aimd_div_insd").hidden = true;
+                        _doc.querySelector("#aimd_btn_add").hidden = false;
+                        _doc.querySelector("#aimd_btn_mod").hidden = true;
+                        _doc.querySelector("#aimd_btn_del").hidden = true;
+                        _doc.querySelector("#aimd_add_continue").hidden = false;
+                        _doc.querySelector("#aimd_add_cont_label").hidden = false;
+                        _doc.querySelector("#aimd_span_itemimage").hidden = false;
+                        _doc.querySelector("#aimd_btn_addimg").hidden = true;
+                        _doc.querySelector("#aimd_btn_delimg").hidden = true;
+                        _doc.querySelector("#aimd_imgs").hidden = true;
+                    }, false);
+                    /**
+                     * 아이템 추가
+                     */
+                    window.document.querySelector("#aimd_btn_add").addEventListener('click', () => {
+
+                        const _doc = window.document;
+
+                        var path = "/jbs/item";
+                        const params = new Array();
+                        params.push({name:"cmd", value:"store"});
+                        params.push({name:"buid", value:urlparam("buid")});
+                        params.push({name:"authcode", value:urlparam("authcode")});
+
+                        let box_name = _doc.querySelector("#aimd_input_boxname").value;
+                        let box_seq = -1;
+                        let item_name = _doc.querySelector("#aimd_input_itemname").value;
+                        let item_qty = _doc.querySelector("#aimd_input_qty").value;
+                        let item_iexpd = _doc.querySelector("#aimd_input_expd").value;
+
+                        if (!box_name) {
+                            alert("박스명이 입력되지 않았습니다");
+                            return -1;
+                        } else {
+                            box_seq = findSeqBox(box_name);
+                        }
+                        if (box_seq < 0) {
+                            alert(box_name + " 박스를 찾을 수 없습니다");
+                            return -1;
+                        } else {
+                            params.push({name:"seq_box", value:box_seq});
+                        }
+                        if (!item_name) {
+                            alert("아이템명이 입력되지 않았습니다");
+                            return -1;
+                        }
+                        if (!item_qty) {
+                            alert("아이템 수량이 없습니다");
+                            return -1;
+                        }
+                        if (item_iexpd) {
+                            item_iexpd = item_iexpd.replaceAll(".", "");
+                        }
+
+                        params.push({name:"item_name", value:item_name});
+                        params.push({name:"item_qty", value:item_qty});
+                        params.push({name:"item_expd", value:item_iexpd});
+
+                        var _ajax = new XMLHttpRequest();
+                        _ajax.onreadystatechange = function () {
+                            if (checkAjaxSuc(_ajax)) {
+                                var resMsg = _ajax.responseText;
+                                if (resMsg.length > 0) {
+                                    let resJson = JSON.parse(resMsg);
+                                    var alertMsg = null;
+                                    if (resJson.code == "000") {
+                                        //팝업창 초기화
+                                        _doc.querySelector("#aimd_input_boxname").value = "";
+                                        _doc.querySelector("#aimd_input_itemname").value = "";
+                                        _doc.querySelector("#aimd_input_qty").value = "1";
+                                        _doc.querySelector("#aimd_input_insd").value = "";
+                                        _doc.querySelector("#aimd_input_expd").value = "";
+                                        
+                                        if (!_doc.querySelector("#aimd_add_continue").checked) {
+                                            //bootstrap.Modal.getInstance(document.getElementById('showAddItemModal')).hide();
+                                            window.location.reload( false );
+                                        }
+                                        alertMsg = resJson.msg;
+                                    } else {
+                                        alertMsg = "* " + resJson.msg + "\n* 입력값을 확인하여 주세요";
+                                    }
+                                    alert(alertMsg);
+                                }
+                            }
+                        };
+                        sendMultipart(_ajax, 
+                            path, 
+                            _doc.querySelector("#aimd_input_itemimages").files,
+                            params);
+
+                    }, false);
+                    /**
+                    * 아이템 수정 팝업
+                    */
+                    function itemModify(seqBox, seqItem) {
+                        const _doc = window.document;
+
+                        //화면 초기화
+                        _doc.querySelector("#addItemModal").innerText = "아이템 수정";
+                        _doc.querySelector("#aimd_div_insd").hidden = false;
+                        _doc.querySelector("#aimd_btn_add").hidden = true;
+                        _doc.querySelector("#aimd_btn_mod").hidden = false;
+                        _doc.querySelector("#aimd_btn_del").hidden = false;
+                        _doc.querySelector("#aimd_add_continue").hidden = true;
+                        _doc.querySelector("#aimd_add_cont_label").hidden = true;
+                        _doc.querySelector("#aimd_car_indi").innerHTML = null;
+                        _doc.querySelector("#aimd_car_inne").innerHTML = null;
+                        _doc.querySelector("#aimd_span_itemimage").hidden = true;
+                        _doc.querySelector("#aimd_btn_addimg").hidden = false;
+
+                        // 참조값 초기화
+                        //alert(JSON.stringify(_doc.boxes));
+                        var box = _doc.boxes[seqBox];
+                        var item = box.items[seqItem];
+
+                        _doc.querySelector("#modal_item_mode").value = "MODIFY";
+                        _doc.querySelector("#modal_box_seq").value = box.seq;
+                        _doc.querySelector("#modal_item_seq").value = item.seq;
+                        _doc.querySelector("#aimd_input_boxname").value = box.name;
+                        _doc.querySelector("#aimd_input_itemname").value = item.name;
+                        _doc.querySelector("#aimd_input_qty").value = item.qty;
+                        _doc.querySelector("#aimd_input_itemimages").value = "";
+                        let iinsd = item.insert_date;
+                        if (iinsd > 0) {
+                            _doc.querySelector("#aimd_input_insd").value = addDatedot(iinsd);
+                        } else {
+                            _doc.querySelector("#aimd_input_expd").value = ".";
+                        }
+                        let iexpd = item.expiry_date;
+                        if (iexpd > 0) {
+                            _doc.querySelector("#aimd_input_expd").value = addDatedot(iexpd);
+                        } else {
+                            _doc.querySelector("#aimd_input_expd").value = ".";
+                        }
+
+                        //아이템 사진 출력
+                        let imgs = item.imgs;
+                        if (imgs && imgs.length > 0) {
+                            var img_slides = _doc.querySelector("#aimd_imgs");
+                            var img_cindi = _doc.querySelector("#aimd_car_indi");
+                            var img_cinne = _doc.querySelector("#aimd_car_inne");
+                            img_slides.hidden = false;
+                            
+                            var cnt_btn = 0;
+                            for (img of imgs) {
+                                let btn_slide = _doc.createElement("button");
+                                btn_slide.setAttribute("type", "button");
+                                btn_slide.setAttribute("data-bs-target", "#aimd_imgs");
+                                btn_slide.setAttribute("data-bs-slide-to", "" + cnt_btn);
+                                btn_slide.setAttribute("aria-label", "Slide " + cnt_btn);
+                                if (cnt_btn == 0) {
+                                    btn_slide.className = "active";
+                                    btn_slide.setAttribute("aria-current", "true");
+                                }
+                                img_cindi.appendChild(btn_slide);
+
+                                let div_car_itm = _doc.createElement("div");
+                                if (cnt_btn == 0) {
+                                    div_car_itm.className = "carousel-item active";
+                                } else {
+                                    div_car_itm.className = "carousel-item";
+                                }
+                                let img_car_itm = _doc.createElement("img");
+                                img_car_itm.src = img;
+                                img_car_itm.className = "d-block w-100";
+                                img_car_itm.setAttribute("alt", "...");
+
+                                div_car_itm.appendChild(img_car_itm);
+                                img_cinne.appendChild(div_car_itm);
+
+                                cnt_btn++;
+                            }
+                        } else {
+                            _doc.querySelector("#aimd_imgs").hidden = true;
+                        }
+                    }
+                    /**
+                     * 아이템 수정
+                     */
+                    window.document.querySelector("#aimd_btn_mod").addEventListener('click', () => {
+
+                        const _doc = window.document;
+
+                        var path = "/jbs/item";
+                        const params = new Array();
+                        params.push({name:"cmd", value:"store"});
+                        params.push({name:"buid", value:urlparam("buid")});
+                        params.push({name:"authcode", value:urlparam("authcode")});
+                        let seq_item = _doc.querySelector("#modal_item_seq").value;
+                        if (seq_item) {
+                            params.push({name:"seq_item", value:seq_item});
+                        } else {
+                            alert("아이템이 선택되지 않았습니다");
+                            return -1;
+                        }
+                        let box_name = _doc.querySelector("#aimd_input_boxname").value;
+                        if (!box_name) {
+                            alert("박스명이 입력되지 않았습니다");
+                            return -1;
+                        } else {
+                            box_seq = findSeqBox(box_name);
+                        }
+                        if (box_seq < 0) {
+                            alert(box_name + " 박스를 찾을 수 없습니다");
+                            return -1;
+                        } else {
+                            params.push({name:"seq_box", value:box_seq});
+                        }
+
+                        params.push({name:"item_name", value:_doc.querySelector("#aimd_input_itemname").value});
+                        params.push({name:"item_qty", value:_doc.querySelector("#aimd_input_qty").value});
+                        let iexpd = _doc.querySelector("#aimd_input_expd").value;
+                        if (iexpd) {
+                            params.push({name:"item_expd", value:delDatedot(iexpd)});
+                        }
+                        if (!confirm("수정하시겠습니까?")) {
+                            return -1;
+                        }
+                        var _ajax = new XMLHttpRequest();
+                        _ajax.onreadystatechange = function () {
+                            if (checkAjaxSuc(_ajax)) {
+                                var resMsg = _ajax.responseText;
+                                if (resMsg.length > 0) {
+                                    let resJson = JSON.parse(resMsg);
+                                    var alertMsg = null;
+                                    if (resJson.code == "000") {
+                                        //팝업창 초기화
+                                        _doc.querySelector("#aimd_input_boxname").value = "";
+                                        _doc.querySelector("#aimd_input_itemname").value = "";
+                                        _doc.querySelector("#aimd_input_qty").value = "1";
+                                        _doc.querySelector("#aimd_input_insd").value = "";
+                                        _doc.querySelector("#aimd_input_expd").value = "";
+                                        _doc.querySelector("#aimd_input_itemimages").value = "";
+
+                                        updateItemList(resJson);
+                                        bootstrap.Modal.getInstance(document.getElementById('showAddItemModal')).hide();
+                                        alertMsg = resJson.msg;
+                                    } else {
+                                        alertMsg = "* " + resJson.msg + "\n* 입력값을 확인하여 주세요";
+                                    }
+                                    alert(alertMsg);
+                                }
+                            }
+                        };
+
+                        sendMultipart(_ajax, 
+                            path, 
+                            _doc.querySelector("#aimd_input_itemimages").files,
+                            params);
+                    }, false);
+                    /**
+                     * 아이템 삭제
+                     */
+                    window.document.querySelector("#aimd_btn_del").addEventListener('click', () => {
+                        const _doc = window.document;
+
+                        var path = "/jbs/item";
+                        var params = "cmd=take";
+                        params += "&buid=" + urlparam("buid");
+                        params += "&authcode=" + urlparam("authcode");
+                        params += "&seq_box=" + urlparam("seq_box");
+                        let seq_item = _doc.querySelector("#modal_item_seq").value;
+                        if (seq_item) {
+                            params += "&seq_item=" + seq_item;
+                        } else {
+                            alert("아이템이 선택되지 않았습니다");
+                            return -1;
+                        }
+                        if (!confirm("선택한 아이템을 삭제하시겠습니까?")) {
+                            return -1;
+                        }
+                        var _ajax = new XMLHttpRequest();
+                        _ajax.onreadystatechange = function () {
+                            if (checkAjaxSuc(_ajax)) {
+                                var resMsg = _ajax.responseText;
+                                if (resMsg.length > 0) {
+                                    let resJson = JSON.parse(resMsg);
+                                    var alertMsg = null;
+                                    if (resJson.code == "000") {
+                                        updateItemList(resJson);
+                                        bootstrap.Modal.getInstance(document.getElementById('showAddItemModal')).hide();
+                                        alertMsg = resJson.msg;
+                                    } else {
+                                        alertMsg = "* " + resJson.msg + "\n* 입력값을 확인하여 주세요";
+                                    }
+                                    alert(alertMsg);
+                                }
+                            }
+                        };
+                        sendPost(_ajax, path, params);
+                    }, false);
+                    /**
+                     * 팝업 close시의 처리
+                     */
+					window.document.querySelector("#showAddItemModal").addEventListener('hidden.bs.modal', () => {
+						barcodeCameraOff();
+					}, false);
+                </script>
+
+            </main>
+        </div>
+    </div>
+    <footer id="jb_footer" class="my-3 text-center text-small"></footer>
+    <script>importHTML("/jbs/jb_footer.html", 'jb_footer');</script>
+
+    <script>
+        window.addEventListener('load', () => {
+
+            barcodeScanInit();
+
+            var path = "/jbs/box";
+            var params = "cmd=list";
+            params += "&buid=" + urlparam("buid");
+            params += "&authcode=" + urlparam("authcode");
+            params += "&seq_store=" + urlparam("seq_store");
+
+            var _ajax = new XMLHttpRequest();
+            _ajax.onreadystatechange = function () {
+                if (checkAjaxSuc(_ajax)) {
+                    var resMsg = _ajax.responseText;
+                    if (resMsg.length > 0) {
+                        //alert(resMsg);
+                        let resJo = JSON.parse(resMsg);
+                        if (resJo.code == '000') {
+                            let boxes = window.document.boxes = resJo.boxes;
+                            let aria_controls_value = "";
+                            let seqArr = Object.keys(boxes);
+                            for (let i = 1; i <= seqArr.length; i++) {
+                                let box = boxes[seqArr[i - 1]];
+                                createBoxcard(resJo.buid, box.seq, box.name, box.items);
+                                aria_controls_value += " multicollapse_carditem_" + box.seq;
+                            }
+                            if (seqArr.length > 0) {
+                                window.document.querySelector("#btn_list_collapse").setAttribute("aria-controls", aria_controls_value);
+                            }
+                        } else {
+                            authInfoMessage(resJo.code, resJo.msg);
+                        }
+                    }
+                }
+            };
+            sendPost(_ajax, path, params);
+        }, false);
+
+        function createBoxcard(buid, seqBox, name, items) {
+            const _doc = window.document;
+
+            let card_outer = _doc.createElement("div");
+            card_outer.className = "col-sm-6 mb-3 mb-sm-3";
+            _doc.querySelector("#card-row").appendChild(card_outer);
+
+            let card = _doc.createElement("div");
+            card.className = "card";
+            card_outer.appendChild(card);
+
+            let card_body = _doc.createElement("div");
+            card_body.className = "card-body btn-toolbar justify-content-between";
+            card.appendChild(card_body);
+
+            let card_btntitle = _doc.createElement("button");
+            card_btntitle.type = "button";
+            card_btntitle.className = "btn btn-lg";
+            card_btntitle.innerText = name;
+            card_btntitle.addEventListener('click', event => {
+                window.location.href = "/jbs/box_detail.html?seq_box=" + seqBox + "&buid=" + buid;
+            });
+            card_body.appendChild(card_btntitle);
+
+            let seqArr = Object.keys(items);
+            if (items && seqArr.length > 0) {
+                let card_btnbadge = _doc.createElement("button");
+                card_btnbadge.type = "button";
+                card_btnbadge.className = "btn";
+                card_btnbadge.style = "--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;";
+                card_btnbadge.innerHTML = "<span class='badge text-bg-secondary'>" + seqArr.length + "</span>";
+                card_btnbadge.setAttribute("data-bs-toggle", "collapse");
+                card_btnbadge.setAttribute("data-bs-target", "#multicollapse_carditem_" + seqBox);
+                card_btnbadge.setAttribute("aria-expanded", "false");
+                card_btnbadge.setAttribute("aria-controls", "multicollapse_carditem_" + seqBox);
+                card_body.appendChild(card_btnbadge);
+
+                let list_group = _doc.createElement("ul");
+                list_group.className = "list-group list-group-flush collapse multi-collapse"; // box 의 아이템 목록을 collapse
+                list_group.setAttribute("id", "multicollapse_carditem_" + seqBox);
+                card.appendChild(list_group);
+
+                for (let i = 1; i <= seqArr.length; i++) {
+                    let item = items[seqArr[i - 1]];
+                    addItemRow(list_group, seqBox, item);
+                }
+            }
+        }
+
+        function addItemRow(list_group, seqBox, item) {
+            const _doc = window.document;
+
+            var list_group_item = _doc.createElement("li");
+            list_group_item.className = "list-group-item d-flex justify-content-between align-items-center";
+
+            let item_name = _doc.createElement("span");
+            item_name.setAttribute("id", "item_" + item.seq);
+            item_name.setAttribute("data-bs-toggle", "modal");
+            item_name.setAttribute("data-bs-target", "#showAddItemModal");
+            let edate_str = " (저장:" + addDatedot(item.insert_date);
+            if (item.expiry_date > 0) {
+                edate_str += ", 만료:" + addDatedot(item.expiry_date);
+            }
+            edate_str += ")";			
+            item_name.innerText = " " + item.name + " " + edate_str;
+            item_name.addEventListener('click', () => {
+                itemModify(seqBox, item.seq);
+            });
+            list_group_item.appendChild(item_name);
+
+            let item_qty = _doc.createElement("span");
+            item_qty.setAttribute("id", "item_qty_" + item.seq);
+            item_qty.className = "badge bg-primary rounded-pill";
+            item_qty.innerText = item.qty;
+            list_group_item.appendChild(item_qty);
+
+            list_group.appendChild(list_group_item);
+        }
+
+        function updateItemList(resJson) {
+			const _doc = window.document;
+			
+			if (resJson.items) { //전체 목록을 갱신
+				_doc.box.items = resJson.items;
+				_doc.querySelector("#item-list").innerHTML = "";
+				let card_outer = _doc.createElement("ul");
+				card_outer.className = "list-group list-group-flush";
+				let keyArr = Object.keys(resJson.items);
+				for (i = 1; i <= keyArr.length; i++) {
+					addItemRow(card_outer, resJson.items[keyArr[i - 1]]);
+				}
+				_doc.querySelector("#item-list").appendChild(card_outer);
+			} else if (resJson.seqItem) { //수정된 해당 아이템만 변경
+				var item = _doc.boxes[resJson.seqBox].items[resJson.seqItem];
+				item.name = resJson.itemName;
+				item.qty = resJson.itemQty;
+				item.expiry_date = resJson.itemExpd;
+                item.imgs = resJson.itemImgs;
+
+				let itemElem = _doc.querySelector("#item_" + resJson.seqItem);
+                let edate_str = " (저장:" + addDatedot(item.insert_date);
+                if (item.expiry_date > 0) {
+                    edate_str += ", 만료:" + addDatedot(item.expiry_date);
+                }
+                edate_str += ")";
+                itemElem.innerText = " " + item.name + " " + edate_str;
+
+				_doc.querySelector("#item_qty_" + resJson.seqItem).innerText = item.qty;
+			}
+		}
+        
+        function findSeqBox(box_name) {
+            let boxes = window.document.boxes;                            
+            let seqArr = Object.keys(boxes);
+            for (let i = 1; i <= seqArr.length; i++) {
+                let box = boxes[seqArr[i - 1]];
+                if (box.name == box_name) {
+                    return box.seq;
+                }
+            }
+            return -1;
+        }
+    </script>
+
+
+    <script src="./res/web/bootstrap/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <script src="./res/web/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+
+    <div id="__endic_crx__">
+        <div class="css-diqpy0"></div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+# Build output
+/.gradle
+/build
+/bin
+/out
+
+# IDE 환경 (각자 자기 환경에 맞게 설정)
+/.classpath
+/.project
+/.settings
+/.vscode
+/.idea
+*.iml
+
+# 시크릿 / 인증 자료 — 절대 커밋 금지
+gradle.properties
+src/main/java/res/JINIEBOX.PROPERTIES
+src/main/java/res/*.json
+src/main/java/res/keycode_*.dat
+src/test/**/credentials.json
+**/firebase-adminsdk*.json
+
+# SSL / 키스토어
+ssl/
+*.jks
+*.p12
+*.pem
+*.key
+
+# Standalone 실행 산출물
+/data
+/logs
+
+# OS / Editor 잡파일
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Claude Code local
+.claude/

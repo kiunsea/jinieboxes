@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="template/navbar/css/styles.css" rel="stylesheet" />
+    <title>JINIEBOX 프로필</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+    </style>
+</head>
+
+<body class="p-3 m-0 border-0 bd-example">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="input-form-backgroud row">
+            <div class="input-form col-md-12 mx-auto">
+                <h4 class="mb-3">프로필</h4>
+                <form class="validation-form" novalidate>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col">
+                                <label for="juid">아이디</label>
+                                <input type="text" class="form-control" id="juid" placeholder="*필수" value="" disabled readonly>
+                            </div>
+                            <div class="col">
+                                <label for="juname">사용자명</label>
+                                <input type="text" class="form-control" id="juname" placeholder="*옵션" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="jupw">비밀번호</label>
+                                <input type="text" class="form-control" id="jupw" placeholder="" value="" required>
+                            </div>
+                            <div class="col">
+                                <label for="jupw_confirm">확인</label>
+                                <input type="text" class="form-control" id="jupw_confirm" placeholder="" value="" required>
+                            </div>
+                        </div>
+                        <div class="mb-2"></div>
+                        <button id="btn_modify" class="btn btn-primary btn-sm btn-block" type="button">수정 요청</button>
+                    </div>
+
+                    <hr class="mb-4">
+                    <div class="mb-3">
+                        <label for="inviteCode">공유 받은 목록</label>
+                        <ul id="sharedlist" class="list-group list-group-flush">
+                            <!--li class="list-group-item d-flex justify-content-between align-items-center">UNISOTRE<span
+                                    class="badge bg-primary rounded-pill">F</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">BOMISTORE - SORABOX<span
+                                    class="badge bg-primary rounded-pill">G</span></li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">BOMISTORE - DORIBOX<span
+                                    class="badge bg-primary rounded-pill">G</span></li-->
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" id="inviteCode" placeholder="초대코드 입력">
+                    <div class="mb-2"></div>
+                    <button id="btn_shareadd" class="btn btn-primary btn-sm btn-block" type="button">공유 추가</button>
+                </form>
+            </div>
+        <footer class="my-3 text-center text-small">
+            <p class="mb-1 fs-3 fw-bold">&copy; JINIEBOX</p>
+            <p class="fs-6 text-black-50">(OMNIBUSCODE)</p>
+        </footer>
+
+        <script type="text/javascript">
+            window.addEventListener('load', () => {
+                var path = "/jiniebox/user";
+                var params = "cmd=info";
+                if (urlparam("buid")) params += "&buid=" + urlparam("buid");
+                params += "&authcode=" + urlparam("authcode");
+                
+                var _ajax = new XMLHttpRequest();
+                _ajax.onreadystatechange = function () {
+                    if (checkAjaxSuc(_ajax)) {
+                        var _doc = window.document;
+                        var resMsg = _ajax.responseText;
+                        if (resMsg.length > 0) {
+                            //alert(resMsg);
+                            let userJo = JSON.parse(resMsg);
+                            _doc.querySelector("#juid").value = userJo.juid;
+                            _doc.querySelector("#juname").value = userJo.juname;
+
+                            var list_group = _doc.querySelector("#sharedlist");
+                            for (sharedinfo of userJo.sharedlist) {
+                                //TODO jiniebox_box_info.html 에서 addInviteRow() 함수를 참고하여 나머지 구현
+                                var list_group_item = _doc.createElement("li");
+                                list_group_item.className = "list-group-item d-flex justify-content-between align-items-center";
+                                list_group_item.innerHTML = sharedinfo.name_store + (sharedinfo.name_box ? " - " + sharedinfo.name_box : "") + "<span class='badge bg-primary rounded-pill' >" + sharedinfo.authority + "</span >";
+                                list_group.appendChild(list_group_item);
+                            }
+                        }
+                    }
+                };
+
+                // POST 방식으로 요청시
+                _ajax.open("POST", path);
+                _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                try {
+                    _ajax.send(params);
+                } catch (e) {
+                    if (e.message && e.message.indexOf("0x80004005") > -1) {
+                        return;
+                    }
+                }
+            }, false);
+
+            document.querySelector("#btn_modify").addEventListener('click', function (event) {
+                var val_juid = document.querySelector("#juid").value;
+                var val_jupw = document.querySelector("#jupw").value;
+                var val_jupwc = document.querySelector("#jupw_confirm").value;
+                var val_juname = document.querySelector("#juname").value;
+
+                if (!val_jupw) {
+                    alert("비밀번호를 입력해주세요");
+                    return -1;
+                }
+                if (!val_jupwc) {
+                    alert("비밀번호 확인을 입력해주세요");
+                    return -1;
+                }
+                if (val_jupw != val_jupwc) {
+                    alert("비밀번호 확인이 올바르지 않습니다");
+                    return -1;
+                }
+
+                var path = "/jiniebox/user";
+                var params = "cmd=modify";
+                if (urlparam("buid")) params += "&buid=" + urlparam("buid");
+                params += "&authcode=" + urlparam("authcode");
+                params += "&juid=" + val_juid;
+                params += "&jupw=" + val_jupw;
+                params += "&juname=" + val_juname;
+
+                var _ajax = new XMLHttpRequest();
+                _ajax.onreadystatechange = function () {
+                    if (checkAjaxSuc(_ajax)) {
+                        var resMsg = _ajax.responseText;
+                        if (resMsg.length > 0) alert(resMsg);
+                    }
+                };
+
+                // POST 방식으로 요청시
+                _ajax.open("POST", path);
+                _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                try {
+                    _ajax.send(params);
+                } catch (e) {
+                    if (e.message && e.message.indexOf("0x80004005") > -1) {
+                        return;
+                    }
+                }
+            }, false);
+
+            document.querySelector("#btn_shareadd").addEventListener('click', function (event) {
+                var val_juid = document.querySelector("#juid").value;
+                var val_icode = document.querySelector("#inviteCode").value;
+
+                if (!val_icode) {
+                    alert("초대 받은 코드를 입력해주세요");
+                    return -1;
+                }
+
+                var path = "/jiniebox/invite";
+                var params = "cmd=shareadd";
+                if (urlparam("buid")) params += "&buid=" + urlparam("buid");
+                params += "&authcode=" + urlparam("authcode");
+                params += "&juid=" + val_juid;
+                params += "&scode=" + val_icode;
+
+                var _ajax = new XMLHttpRequest();
+                _ajax.onreadystatechange = function () {
+                    if (checkAjaxSuc(_ajax)) {
+                        var resMsg = _ajax.responseText;
+                        if (resMsg.length > 0) alert(resMsg);
+                    }
+                };
+
+                // POST 방식으로 요청시
+                _ajax.open("POST", path);
+                _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                try {
+                    _ajax.send(params);
+                } catch (e) {
+                    if (e.message && e.message.indexOf("0x80004005") > -1) {
+                        return;
+                    }
+                }
+            }, false);
+
+            function urlparam(name) {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                if (!urlParams.has(name)) { return false; }
+                return urlParams.get(name);
+            }
+
+            function checkAjaxSuc(ajax) {
+                if (ajax.readyState == 4) {
+                    try {
+                        return (ajax.status >= 200 && ajax.status < 300);
+                    } catch (ignore) {
+                        return false;
+                    }
+                }
+                return false;
+            }
+        </script>
+    </div>
+</body>
+
+</html>

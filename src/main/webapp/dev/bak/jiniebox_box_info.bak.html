@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="template/navbar/css/styles.css" rel="stylesheet" />
+    <title>JINIEBOX 박스 정보(with Bixby)</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+    </style>
+</head>
+
+<body class="p-3 m-0 border-0 bd-example">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+    <div class="row" id="card-detail">
+        <div class="col-sm-6 mb-3 mb-sm-3">
+            <div id="card" class="card">
+                <a href="#">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180"
+                        xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
+                        preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                </a>
+                <div class="card-body">
+                    <h5 id="card-title" class="card-title">Card title</h5>
+                    <p id="card-text" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div class="card-share">
+                    <h5 id="card-title" class="card-title">공유</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">id</th>
+                                <th scope="col">auth</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Family</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Guest</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-invite">
+                    <h5 id="card-title" class="card-title">초대</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">id</th>
+                                <th scope="col">auth</th>
+                                <th scope="col">expire</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invite-tbody">
+                            <tr>
+                                <th></th>
+                                <td colspan="3">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#showModal" id="btn_invite_add">ADD</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+<script>
+    /**
+    * 초대 수정 팝업
+    */
+    function inviteModify(invSeq) {
+        const _doc = window.document;
+        _doc.querySelector("#md_input_id").setAttribute("disabled", "");
+        _doc.querySelector("#md_input_id").setAttribute("readonly", "");
+        _doc.querySelector("#modal_inv_updated").value = "false";
+        _doc.querySelector("#md_btn_ok").textContent = "수정";
+        _doc.querySelector("#md_btn_gen").textContent = "Regenerate";
+
+        var invite = _doc.box.invites[invSeq];
+        //alert(JSON.stringify(invite));
+        _doc.querySelector("#modal_mode").value = "MODIFY";
+        _doc.querySelector("#modal_inv_seq").value = invite.seq;
+        _doc.querySelector("#md_input_id").value = invite.mem_id;
+        _doc.querySelector("#md_auth_right").value = invite.auth_right;
+        _doc.querySelector("#invitecode").value = invite.invite_code;
+        _doc.querySelector("#inviteurl").value = invite.invite_url;
+        _doc.querySelector("#expirydate").value = invite.expiry_date;        
+    }
+    /**
+     * 초대 추가 팝업
+     */
+    window.document.querySelector("#btn_invite_add").addEventListener('click', () => {
+        const _doc = window.document;
+        _doc.querySelector("#md_input_id").removeAttribute("disabled");
+        _doc.querySelector("#md_input_id").removeAttribute("readonly");
+        _doc.querySelector("#md_btn_ok").textContent = "추가";
+        _doc.querySelector("#md_btn_gen").textContent = "Generate";
+
+        _doc.querySelector("#modal_mode").value = "ADD";
+        _doc.querySelector("#modal_inv_seq").value = "";
+        _doc.querySelector("#md_input_id").value = "";
+        _doc.querySelector("#md_auth_right").value = "F";
+        _doc.querySelector("#invitecode").value = "";
+        _doc.querySelector("#inviteurl").value = "";
+        _doc.querySelector("#expirydate").value = "";
+    }, false);
+</script>
+                    <input type="text" id="modal_inv_seq" hidden>
+                    <input type="text" id="modal_inv_authright" hidden>
+                    <input type="text" id="modal_inv_expire" hidden>
+                    <input type="text" id="modal_inv_updated" hidden>
+                    <input type="text" id="modal_mode" value="ADD" hidden>
+                    <div id="showModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="sampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div>
+                                        <h5 class="modal-title" id="sampleModalLabel">초대장</h5>
+                                    </div>
+                                    <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal" id="md_btn_close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text" id="userid">대상아이디</span><input type="text" class="form-control" list="md_id_dl_opts" id="md_input_id">
+                                        <datalist id="md_id_dl_opts"></datalist>
+                                    </div>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text" id="userauth">공유권한</span>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="md_auth_right">
+                                            <option value="F" selected>Family</option>
+                                            <option value="G">Guest</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">초대코드</span><input type="text" class="form-control" placeholder="please generate" disabled readonly id="invitecode">
+                                    </div>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">초대링크</span><input type="text" class="form-control" placeholder="please generate" disabled readonly id="inviteurl">
+                                    </div>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text">유효일자</span><input type="text" class="form-control" placeholder="please generate" disabled readonly id="expirydate">
+                                    </div>
+                                    <div class="input-group mb-2"><button type="button" class="btn btn-primary" id="md_btn_gen">Generate</button></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="md_btn_ok">수정</button>
+                                    <button type="button" class="btn btn-secondary" id="md_btn_cancel" data-bs-dismiss="modal">취소</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<script>
+    /**
+    * 아이디 검색
+    */
+    window.document.md_input_id_prevalue = null;
+    window.document.querySelector("#md_input_id").addEventListener('keyup', () => {
+        //console.debug("[debug] keyup~");
+        const _doc = window.document;
+        let inputTxt = _doc.querySelector("#md_input_id").value;
+
+        if (window.document.md_input_id_prevalue == inputTxt) {
+            return -1;
+        } else {
+            window.document.md_input_id_prevalue = inputTxt;            
+        }
+
+        var path = "/jiniebox/user";
+        var params = "cmd=predictiveId";
+        params += "&buid=" + urlparam("buid");
+        params += "&authcode=" + urlparam("authcode");
+        params += "&input_txt=" + inputTxt;
+
+        var _ajax = new XMLHttpRequest();
+        _ajax.onreadystatechange = function () {
+            if (checkAjaxSuc(_ajax)) {
+                var resMsg = _ajax.responseText;
+                if (resMsg.length > 0) {
+                    //alert(resMsg);
+                    const _doc = window.document;
+                    let juids = JSON.parse(resMsg)["juids"];
+                    if (juids && juids.length > 0) {
+                        var dataList = _doc.querySelector("#md_id_dl_opts");
+                        var options = "";
+                        for (juid of juids) {
+                            options += "<option value='" + juid + "'>";
+                        }
+                        dataList.innerHTML = options;
+                    }
+                }
+            }
+        };
+
+        // POST 방식으로 요청시
+        _ajax.open("POST", path);
+        _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        try {
+            _ajax.send(params);
+        } catch (e) {
+            if (e.message && e.message.indexOf("0x80004005") > -1) {
+                return;
+            }
+        }
+    }, false);
+    /**
+     * Generate
+     */
+    window.document.querySelector("#md_btn_gen").addEventListener('click', () => {
+        const _doc = window.document;
+
+        if (!_doc.querySelector("#md_input_id").value) {
+            alert("아이디를 입력해야 합니다");
+            return -1;
+        }
+
+        var path = "/jiniebox/invite";
+        var params = "cmd=generate";
+        params += "&buid=" + urlparam("buid");
+        params += "&authcode=" + urlparam("authcode");
+        params += "&uid=" + _doc.querySelector("#md_input_id").value;
+        // params += "&right=" + _doc.querySelector("#md_auth_right").value;
+        // params += "&seq_box=" + urlparam("seq_box");
+
+        var _ajax = new XMLHttpRequest();
+        _ajax.onreadystatechange = function () {
+            if (checkAjaxSuc(_ajax)) {
+                var resMsg = _ajax.responseText;
+                if (resMsg.length > 0) {
+                    //alert(resMsg);
+                    let invJson = JSON.parse(resMsg);
+                    const _doc = window.document;
+                    _doc.querySelector("#invitecode").value = invJson.code;
+                    _doc.querySelector("#inviteurl").value = invJson.url;
+                    _doc.querySelector("#expirydate").value = invJson.expire;
+                }
+            }
+        };
+
+        // POST 방식으로 요청시
+        _ajax.open("POST", path);
+        _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        try {
+            _ajax.send(params);
+        } catch (e) {
+            if (e.message && e.message.indexOf("0x80004005") > -1) {
+                return;
+            }
+        }
+    }, false);
+    /**
+     * 초대장 저장
+     */
+    window.document.querySelector("#md_btn_ok").addEventListener('click', () => {
+        const _doc = window.document;
+
+        if (!_doc.querySelector("#md_input_id").value) {
+            alert("아이디를 입력해야 합니다");
+            return -1;
+        }
+
+        var invites = _doc.box.invites;
+        if (invites) {
+            var invite = null;
+            var keyArr = Object.keys(invites);
+            for (i = 0; i < keyArr.length; i++) {
+                invite = invites[keyArr[i]];
+                if (invite.seq_box == urlparam("seq_box")
+                    && invite.mem_id == _doc.querySelector("#md_input_id").value) {
+                    if (!confirm("기존에 저장된 초대장에 반영 하시겠습니까?")) {
+                        return -1;
+                    }
+                }
+            }
+        }
+
+        var path = "/jiniebox/invite";
+        var params = "cmd=save";
+        params += "&buid=" + urlparam("buid");
+        params += "&authcode=" + urlparam("authcode");
+        params += "&uid=" + _doc.querySelector("#md_input_id").value; //공유 받을 사람
+        params += "&authority=" + _doc.querySelector("#md_auth_right").value; // 부여할 자격
+        params += "&seq_box=" + urlparam("seq_box");
+        params += "&code=" + _doc.querySelector("#invitecode").value;
+        params += "&url=" + _doc.querySelector("#inviteurl").value;
+        params += "&expire=" + _doc.querySelector("#expirydate").value;
+
+        var _ajax = new XMLHttpRequest();
+        _ajax.onreadystatechange = function () {
+            if (checkAjaxSuc(_ajax)) {
+                var resMsg = _ajax.responseText;
+                if (resMsg.length > 0) {
+                    let resJson = JSON.parse(resMsg);
+                    var alertMsg = null;
+                    if (resJson.code == "000") {
+                        //const _doc = window.document;
+                        //var temp = _doc.querySelector("#showModal");
+                        //_doc.querySelector("#modal_inv_seq").focus();
+                        //_doc.querySelector("#md_btn_ok").attributes["data-bs-target"] = "#modal_inv_seq";
+                        //_doc.showModal.modal('hide');
+                        //2023.03.31 활성화된 모달창을 닫을 API를 도저히 못찾겠다, 일단은 걍 alert 으로 성공 여부 띄우고 페이지를 리로드 하는 것으로 마무리한다
+                        _doc.querySelector("#modal_inv_updated").value = "true";
+                        alertMsg = resJson.msg;
+                        window.location.reload(false);
+                    } else {
+                        alertMsg = "* " + resJson.msg + "\n* 입력값을 확인하여 주세요";
+                    }
+                    alert(alertMsg);
+                }
+            }
+        };
+
+        // POST 방식으로 요청시
+        _ajax.open("POST", path);
+        _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        try {
+            _ajax.send(params);
+        } catch (e) {
+            if (e.message && e.message.indexOf("0x80004005") > -1) {
+                return;
+            }
+        }
+    }, false);
+    window.document.querySelector("#md_btn_close").addEventListener('click', () => {
+        const _doc = window.document;
+        if (_doc.querySelector("#modal_inv_updated").value == "true") {
+            var invSeq = _doc.querySelector("#modal_inv_seq").value;
+            var invite = _doc.box.invites[invSeq];
+            invite.auth_right = _doc.querySelector("#md_auth_right").value;
+            invite.expiry_date = _doc.querySelector("#expirydate").value;
+            _doc.querySelector("#td_invmod_authright_" + invSeq).innerText = _doc.querySelector("#md_auth_right").value;
+            _doc.querySelector("#td_invmod_expirydate_" + invSeq).innerText = _doc.querySelector("#expirydate").value;
+        }
+    }, false);
+    window.document.querySelector("#md_btn_cancel").addEventListener('click', () => {
+        const _doc = window.document;
+        if (_doc.querySelector("#modal_inv_updated").value == "true") {
+            var invSeq = _doc.querySelector("#modal_inv_seq").value;
+            var invite = _doc.box.invites[invSeq];
+            invite.auth_right = _doc.querySelector("#md_auth_right").value;
+            invite.expiry_date = _doc.querySelector("#expirydate").value;
+            _doc.querySelector("#td_invmod_authright_" + invSeq).innerText = _doc.querySelector("#md_auth_right").value;
+            _doc.querySelector("#td_invmod_expirydate_" + invSeq).innerText = _doc.querySelector("#expirydate").value;
+        }
+    }, false);
+</script>
+                </div>
+                <!--
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">An item<span
+                            class="badge bg-primary rounded-pill">14</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">A second item<span
+                            class="badge bg-primary rounded-pill">2</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">A third item<span
+                            class="badge bg-primary rounded-pill">1</span></li>
+                </ul>
+                -->
+            </div>
+        </div>
+    </div>
+<script>
+    window.addEventListener('load', () => {
+        var path = "/jiniebox/box";
+        var params = "cmd=info";
+        params += "&buid=" + urlparam("buid");
+        params += "&authcode=" + urlparam("authcode");
+        params += "&seq_box=" + urlparam("seq_box");
+
+        var _ajax = new XMLHttpRequest();
+        _ajax.onreadystatechange = function () {
+            if (checkAjaxSuc(_ajax)) {
+                var resMsg = _ajax.responseText;
+                if (resMsg.length > 0) {
+                    //alert(resMsg);                    
+                    let box = JSON.parse(resMsg)["box"];
+                    window.document.box = box;
+                    showBoxDetail(box);
+                }
+            }
+        };
+
+        // POST 방식으로 요청시
+        _ajax.open("POST", path);
+        _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        try {
+            _ajax.send(params);
+        } catch (e) {
+            if (e.message && e.message.indexOf("0x80004005") > -1) {
+                return;
+            }
+        }
+    }, false);
+
+    function urlparam(name) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (!urlParams.has(name)) { return false; }
+        return urlParams.get(name);
+    }
+
+    function checkAjaxSuc(ajax) {
+        if (ajax.readyState == 4) {
+            try {
+                return (ajax.status >= 200 && ajax.status < 300);
+            } catch (ignore) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    function showBoxDetail(box) {
+        const _doc = window.document;
+        _doc.querySelector("#card-title").innerText = box.name;
+        if (box.details)
+            _doc.querySelector("#card-text").innerText = box.details;            
+        if (box.invites) {
+            var keyArr = Object.keys(box.invites);
+            for (i = 1; i <= keyArr.length; i++) {
+                addInviteRow(_doc.querySelector("#invite-tbody"), i, box.invites[keyArr[i-1]]);
+            }
+        }
+        if (box.items) {
+            let card_outer = _doc.createElement("ul");
+            card_outer.className = "list-group list-group-flush";
+            for (item of box.items) {
+                addItemRow(card_outer, item.name, item.qty);
+            }
+            _doc.querySelector("#card").appendChild(card_outer);
+        }
+    }
+
+    function addInviteRow(list_group, cnt, invite) {
+        const _doc = window.document;
+        var elem_tr = _doc.createElement("tr");
+        var tr_inner = "<th>" + cnt + "</th>";
+        tr_inner += "<td><button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#showModal' id='btn_invite_mod_" + invite.seq + "' onclick='javascript:inviteModify(" + invite.seq + ")'>" + invite.mem_id + "</button></td>";
+        tr_inner += "<td id='td_invmod_authright_"+ invite.seq +"'>" + invite.auth_right + "</td>";
+        tr_inner += "<td id='td_invmod_expirydate_" + invite.seq +"'>" + invite.expiry_date + "</td>";
+        elem_tr.innerHTML = tr_inner;
+        list_group.insertBefore(elem_tr, list_group.children[0]);
+    }
+
+    function addItemRow(list_group, name, qty) {
+        const _doc = window.document;
+        var list_group_item = _doc.createElement("li");
+        list_group_item.className = "list-group-item d-flex justify-content-between align-items-center";
+        list_group_item.innerHTML = name + "<span class='badge bg-primary rounded-pill' >" + qty + "</span >";
+        list_group.appendChild(list_group_item);
+    }
+</script>
+    <footer class="my-3 text-center text-small">
+        <p class="mb-1 fs-3 fw-bold">&copy; JINIEBOX</p>
+        <p class="fs-6 text-black-50">(OMNIBUSCODE)</p>
+    </footer>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href="template/navbar/css/styles.css" rel="stylesheet" />
+    <title>JINIEBOX 박스 목록(with Bixby)</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+    </style>
+</head>
+
+<body class="p-3 m-0 border-0 bd-example">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+    <div class="row" id="card-row">
+
+        <!-- #card template#
+        <div class="col-sm-6 mb-3 mb-sm-3">
+            <div class="card">
+                <a href="#">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180"
+                        xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
+                        preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6"
+                            dy=".3em">Image
+                            cap</text>
+                    </svg>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's
+                        content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">An item<span
+                            class="badge bg-primary rounded-pill">14</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">A second item<span
+                            class="badge bg-primary rounded-pill">2</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">A third item<span
+                            class="badge bg-primary rounded-pill">1</span></li>
+                </ul>
+            </div>
+        </div>
+        -->
+        
+    </div>
+    <footer class="my-3 text-center text-small">
+        <p class="mb-1 fs-3 fw-bold">&copy; JINIEBOX</p>
+        <p class="fs-6 text-black-50">(OMNIBUSCODE)</p>
+    </footer>
+    <script>
+        window.addEventListener('load', () => {
+            var path = "/jiniebox/box";
+            var param = "cmd=list";
+            param += "&buid=" + urlparam("buid");
+            param += "&authcode=" + urlparam("authcode");
+            param += "&seq_store=" + urlparam("seq_store");
+            request(path, param);
+        }, false);
+
+        function urlparam(name) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            if (!urlParams.has(name)) { return false; }
+            return urlParams.get(name);
+        }
+
+        /**
+         * path : 요청받을 서비스페이지
+         * params : 전송할 데이터 (name1=value1&name2=value2&name3=value3)    
+         */
+        function request(path, params) {
+            var _ajax = new XMLHttpRequest();
+            _ajax.onreadystatechange = function () {
+                if (checkAjaxSuc(_ajax)) {
+                    var resMsg = _ajax.responseText;
+                    if (resMsg.length > 0) {
+                        //alert(resMsg);
+                        let resJo = JSON.parse(resMsg);
+                        let boxesJo = resJo.boxes;
+                        for (box of boxesJo) {
+                            createBoxcard(resJo.buid, box.seq, box.name, box.details, box.items);
+                        }
+                    }
+                }
+            };
+
+            // POST 방식으로 요청시
+            _ajax.open("POST", path);
+            _ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            try {
+                _ajax.send(params);
+            } catch (e) {
+                if (e.message && e.message.indexOf("0x80004005") > -1) {
+                    return;
+                }
+            }
+        }
+
+        function checkAjaxSuc(ajax) {
+            if (ajax.readyState == 4) {
+                try {
+                    return (ajax.status >= 200 && ajax.status < 300);
+                } catch (ignore) {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        function createBoxcard(buid, seq, name, details, items) {
+            const _doc = window.document;
+
+            let card_outer = _doc.createElement("div");
+            card_outer.className = "col-sm-6 mb-3 mb-sm-3";
+            _doc.querySelector("#card-row").appendChild(card_outer);
+            
+            let card = _doc.createElement("div");
+            card.className = "card";
+            card.addEventListener('click', event => {
+                window.location.href = "/jiniebox/jiniebox_box_info.html?seq_box=" + seq + "&buid=" + buid;
+            })
+            card_outer.appendChild(card);
+            
+            let card_body = _doc.createElement("div");
+            card_body.className = "card-body";
+            card.appendChild(card_body);
+
+            let card_title = _doc.createElement("h5");
+            card_title.className = "card-title";
+            card_title.innerText = name;
+            card_body.appendChild(card_title);
+
+            if (details) {
+                ;
+            } else {
+                let card_text = _doc.createElement("p");
+                card_text.className = "card-text";
+                card_text.innerText = "Some quick example text to build on the card title";
+                card_body.appendChild(card_text);
+            }
+
+            if (items && items.length > 0) {
+                let list_group = _doc.createElement("ul");
+                list_group.className = "list-group list-group-flush";
+                card.appendChild(list_group);
+
+                let list_group_item = null;
+                items.forEach(elem => {
+                    list_group_item = _doc.createElement("li");
+                    list_group_item.className = "list-group-item d-flex justify-content-between align-items-center";
+                    list_group_item.innerHTML = elem.name+"<span class='badge bg-primary rounded-pill' >"+elem.qty+"</span >";
+                    list_group.appendChild(list_group_item);
+                });
+            }
+        }
+    </script>
+    </div>
+</body>
+
+</html>
