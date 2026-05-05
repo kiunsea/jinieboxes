@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 REM ============================================================
 REM  Jinieboxes 서비스 시작 (임베디드 Tomcat standalone)
 REM
@@ -47,6 +48,6 @@ echo   ARGS : %*
 echo ============================================================
 echo.
 
-java -jar "!JAR!" %*
+java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -jar "!JAR!" %*
 
 endlocal

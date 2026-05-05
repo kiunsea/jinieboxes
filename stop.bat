@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 REM ============================================================
 REM  Jinieboxes 서비스 종료
 REM    실행 중인 com.jiniebox.standalone.JinieboxStandalone JVM 을 찾아
