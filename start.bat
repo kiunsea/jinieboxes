@@ -4,13 +4,16 @@ REM ============================================================
 REM  Jinieboxes 서비스 시작 (임베디드 Tomcat standalone)
 REM
 REM  사용 예:
-REM    start.bat                          기본 포트 8080 으로 시작
+REM    start.bat                          기본 포트 8282 으로 시작
 REM    start.bat --port=9090              포트 변경
 REM    start.bat --config=conf\JINIEBOX.PROPERTIES
 REM    start.bat --data-dir=.\mydata --port=9090
 REM    start.bat --help                   전체 옵션
 REM ============================================================
 setlocal enabledelayedexpansion
+
+REM 사용자가 --port 를 안 줬을 때 적용할 프로젝트 기본 포트
+set DEFAULT_PORT=8282
 
 cd /d "%~dp0"
 
@@ -40,14 +43,21 @@ if not defined JAR (
     exit /b 1
 )
 
-REM 3) 실행
+REM 3) 사용자가 --port 를 안 줬으면 DEFAULT_PORT 추가
+set PORT_ARG=
+echo %* | findstr /C:"--port=" >nul
+if errorlevel 1 (
+    set PORT_ARG=--port=%DEFAULT_PORT%
+)
+
+REM 4) 실행
 echo.
 echo ============================================================
 echo   JAR  : !JAR!
-echo   ARGS : %*
+echo   ARGS : !PORT_ARG! %*
 echo ============================================================
 echo.
 
-java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -jar "!JAR!" %*
+java -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -jar "!JAR!" !PORT_ARG! %*
 
 endlocal
