@@ -3,9 +3,10 @@
 <%@ page import="java.math.BigInteger" %>
 <%@ page import="jakarta.servlet.ServletContext" %>
 <%@ page import="com.omnibuscode.utils.PropertiesUtil"%>
+<%@ page import="com.omnibuscode.base.SafeProps"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    PropertiesUtil.USER_PROPERTIES_PATH = this.getServletContext().getRealPath("/") + "WEB-INF/classes/res/JINIEBOX.PROPERTIES";
+    /* InitializeEnv 가 부팅 시 standalone/WAR 모드에 맞게 이미 설정 — 덮어쓰지 않음 */
 %>
 <!DOCTYPE html>
 <html lang="ko" data-bs-theme="auto">
@@ -159,7 +160,7 @@
                         <div id="sns-login" class="col">
                             <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js" integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH" crossorigin="anonymous"></script>
                             <script>
-                                Kakao.init('<%=PropertiesUtil.get("KAKAO_JAVASCRIPT_KEY")%>');
+                                Kakao.init('<%=SafeProps.getString("KAKAO_JAVASCRIPT_KEY", "")%>');
                             </script>
                             <a id="kakao-login-btn" href="javascript:loginWithKakao()">
                                 <img id="kakao-login-img" src="./res/web/images/kakaotalk_sharing_btn_medium_ov.png" height="45" alt="카카오 로그인 버튼" />
@@ -167,15 +168,15 @@
                             <script>
                                 function loginWithKakao() {
                                     Kakao.Auth.authorize({
-                                        redirectUri: '<%=PropertiesUtil.get("KAKAO_REDIRECT_URI")%>',
+                                        redirectUri: '<%=SafeProps.getString("KAKAO_REDIRECT_URI", "")%>',
                                         state : 'userme',
                                     });
                                 }
                             </script>
                             
                             <%
-                                String clientId = PropertiesUtil.get("NAVER_CLIENT_ID");
-                                String redirectURI = URLEncoder.encode(PropertiesUtil.get("NAVER_REDIRECT_URI"), "UTF-8");
+                                String clientId = SafeProps.getString("NAVER_CLIENT_ID", "");
+                                String redirectURI = URLEncoder.encode(SafeProps.getString("NAVER_REDIRECT_URI", ""), "UTF-8");
                                 SecureRandom random = new SecureRandom();
                                 //String state = new BigInteger(130, random).toString();
                                 String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code"

@@ -42,6 +42,17 @@ configurations {
 	compileOnly.extendsFrom tomcatEmbed
 }
 
+// 이 프로젝트는 Tomcat 11 (Servlet 6.1 / Websocket 2.2) 을 표준으로 사용한다.
+// 어떤 transitive 의존이 더 낮은 버전(jakarta.servlet 5.0, websocket 2.0)을 끌고 와서
+// runtime classpath 에 섞이면 Cookie.setAttribute(String,String) 같은 6.1 신규 API 호출에서
+// NoSuchMethodError 가 발생한다. tomcat-embed 가 자체 6.1/2.2 클래스를 제공하므로
+// 외부 servlet/websocket API 좌표는 모두 제외한다.
+configurations.all {
+	exclude group: 'jakarta.servlet', module: 'jakarta.servlet-api'
+	exclude group: 'jakarta.websocket', module: 'jakarta.websocket-api'
+	exclude group: 'jakarta.websocket', module: 'jakarta.websocket-client-api'
+}
+
 dependencies {
 
 	// ───── Standalone(임베디드 Tomcat) 의존성 ─────
@@ -95,7 +106,12 @@ dependencies {
 	implementation files('src/main/webapp/WEB-INF/lib/json-simple-1.1.1.jar')
 	implementation files('src/main/webapp/WEB-INF/lib/omnibuscode-utils-2.2.0.jar')
 
-	implementation files('src/main/webapp/WEB-INF/lib/jakarta.servlet-api-5.0.0.jar')
+	// jakarta.servlet-api 5.0 은 compile 호환성용으로만 사용한다.
+	// runtime 에는 외부 Tomcat (운영) 또는 tomcat-embed-core 11.0.2 (standalone) 의
+	// Servlet 6.1 API 를 사용한다. 5.0 API 가 runtime classpath 에 같이 있으면
+	// Cookie.setAttribute(String,String) 등 6.1 신규 메서드에 NoSuchMethodError 가
+	// 발생할 수 있다.
+	compileOnly files('src/main/webapp/WEB-INF/lib/jakarta.servlet-api-5.0.0.jar')
 
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'

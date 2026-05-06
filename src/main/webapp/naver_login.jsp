@@ -3,9 +3,10 @@
 <%@ page import="java.security.SecureRandom" %>
 <%@ page import="java.math.BigInteger" %>
 <%@ page import="com.omnibuscode.utils.PropertiesUtil"%>
+<%@ page import="com.omnibuscode.base.SafeProps"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    PropertiesUtil.USER_PROPERTIES_PATH = this.getServletContext().getRealPath("/") + "WEB-INF/classes/res/JINIEBOX.PROPERTIES";
+    /* InitializeEnv 가 부팅 시 standalone/WAR 모드에 맞게 이미 설정 — 덮어쓰지 않음 */
 %>
 <!DOCTYPE html>
 <html>
@@ -13,8 +14,8 @@
     <title>Naver Id Login</title>
     <meta charset="utf-8" />
     <%
-        String clientId = PropertiesUtil.get("NAVER_CLIENT_ID");
-        String redirectURI = URLEncoder.encode(PropertiesUtil.get("NAVER_REDIRECT_URI"), "UTF-8");
+        String clientId = SafeProps.getString("NAVER_CLIENT_ID", "");
+        String redirectURI = URLEncoder.encode(SafeProps.getString("NAVER_REDIRECT_URI", ""), "UTF-8");
         String cuid = request.getParameter("cuid"); //clova user id
         String authCode = request.getParameter("ac"); //jiniebox temp authcode
         

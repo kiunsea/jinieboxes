@@ -39,8 +39,7 @@ public class AuthServlet extends HttpServlet {
     private Logger log = LogManager.getLogger(AuthServlet.class);
 
     public void init() {
-        PropertiesUtil.USER_PROPERTIES_PATH = this.getServletContext().getRealPath("/")
-                + "WEB-INF/classes/res/JINIEBOX.PROPERTIES";
+        /* InitializeEnv 가 부팅 시 standalone/WAR 모드에 맞게 이미 설정 — 덮어쓰지 않음 */
     }
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
