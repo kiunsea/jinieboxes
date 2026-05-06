@@ -75,7 +75,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -112,7 +112,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -159,7 +159,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -188,7 +188,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
 
@@ -233,7 +233,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
         
         return true;
@@ -272,7 +272,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -310,7 +310,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -340,7 +340,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -377,7 +377,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -407,7 +407,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -512,7 +512,7 @@ public class StoreDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();            
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return true;

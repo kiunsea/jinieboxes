@@ -92,7 +92,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
         
         return seqItem;
@@ -151,7 +151,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 				conn.txRollBack();
 				throw e;
 			} finally {
-				conn.close();
+				if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 			}
 		}
 	}
@@ -192,7 +192,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -234,7 +234,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
 
@@ -364,7 +364,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 			log.error(ExceptionUtil.getExceptionInfo(e));
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 	}
 
@@ -423,7 +423,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 			log.error(ExceptionUtil.getExceptionInfo(e));
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 	}
 
@@ -466,7 +466,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 			log.error(ExceptionUtil.getExceptionInfo(e));
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 	}
 	
@@ -516,7 +516,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 	}
 
@@ -568,7 +568,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 			log.error(ExceptionUtil.getExceptionInfo(e));
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 	}
 
@@ -615,7 +615,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
 	
@@ -670,7 +670,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -705,7 +705,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 			conn.txRollBack();
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 		return true;
 	}
@@ -742,7 +742,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 			conn.txRollBack();
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 		return true;
 	}
@@ -940,7 +940,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
 			log.error(ExceptionUtil.getExceptionInfo(e));
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 	}
 	
@@ -985,7 +985,7 @@ public class ItemDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return null;

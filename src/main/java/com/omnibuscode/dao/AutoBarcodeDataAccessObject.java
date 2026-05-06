@@ -53,7 +53,7 @@ public class AutoBarcodeDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();            
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return seqOrder;
@@ -91,7 +91,7 @@ public class AutoBarcodeDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
 

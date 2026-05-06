@@ -81,8 +81,43 @@ public class JinieboxStandalone {
         }, "jiniebox-shutdown"));
 
         tomcat.start();
-        System.out.println("[standalone] http://localhost:" + opts.port + opts.contextPath + " 에서 서비스 중");
+        String serviceUrl = "http://localhost:" + opts.port + opts.contextPath + "/";
+        System.out.println("[standalone] " + serviceUrl + " 에서 서비스 중");
+        openBrowser(serviceUrl);
         tomcat.getServer().await();
+    }
+
+    /**
+     * 서비스 URL 을 기본 브라우저로 연다.
+     * <ul>
+     *   <li>{@code -Djiniebox.no.browser=true} 또는 환경변수 {@code JINIEBOX_NO_BROWSER=true}
+     *       이면 건너뜀 (서버/CI 환경 대응)</li>
+     *   <li>headless 환경 또는 Desktop 미지원 환경이면 자동으로 건너뜀</li>
+     *   <li>실패해도 서버 동작에 영향 없도록 모든 예외를 삼킨다</li>
+     * </ul>
+     */
+    private static void openBrowser(String url) {
+        if (Boolean.parseBoolean(System.getProperty("jiniebox.no.browser", "false"))
+                || "true".equalsIgnoreCase(System.getenv("JINIEBOX_NO_BROWSER"))) {
+            return;
+        }
+        if (java.awt.GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+        // Desktop.browse 가 일부 환경에서 hang 할 수 있어 별도 thread 에서 실행
+        Thread t = new Thread(() -> {
+            try {
+                if (java.awt.Desktop.isDesktopSupported()
+                        && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
+                    java.awt.Desktop.getDesktop().browse(new java.net.URI(url));
+                    System.out.println("[standalone] 브라우저로 " + url + " 열기 시도");
+                }
+            } catch (Throwable ignored) {
+                /* 자동 브라우저 열기는 부가 기능 — 실패해도 서버는 정상 동작 */
+            }
+        }, "jiniebox-open-browser");
+        t.setDaemon(true);
+        t.start();
     }
 
     /**

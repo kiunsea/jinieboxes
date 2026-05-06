@@ -51,7 +51,7 @@ public class FcmTokenDataAccessObject extends CommonDataAccessObject {
         } catch (Exception e) {
             log.error(ExceptionUtil.getExceptionInfo(e));
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
         
         return result;
@@ -93,7 +93,7 @@ public class FcmTokenDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
         
         return true;
@@ -128,7 +128,7 @@ public class FcmTokenDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -157,7 +157,7 @@ public class FcmTokenDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
         return true;
     }

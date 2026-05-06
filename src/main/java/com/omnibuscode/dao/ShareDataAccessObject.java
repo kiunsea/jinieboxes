@@ -71,7 +71,7 @@ public class ShareDataAccessObject extends CommonDataAccessObject {
 			log.error(ExceptionUtil.getExceptionInfo(e));
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
     }
 
@@ -111,7 +111,7 @@ public class ShareDataAccessObject extends CommonDataAccessObject {
 			log.error(ExceptionUtil.getExceptionInfo(e));
 			throw e;
 		} finally {
-			conn.close();
+			if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 		}
 	}
     
@@ -158,7 +158,7 @@ public class ShareDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();            
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return true;
@@ -198,7 +198,7 @@ public class ShareDataAccessObject extends CommonDataAccessObject {
             log.debug(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -246,7 +246,7 @@ public class ShareDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
         
         return true;
@@ -284,7 +284,7 @@ public class ShareDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
 }

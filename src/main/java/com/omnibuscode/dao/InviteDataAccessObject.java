@@ -47,7 +47,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
         } catch (Exception e) {
             log.error(ExceptionUtil.getExceptionInfo(e));
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
         
         return result;
@@ -80,7 +80,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
         } catch (Exception e) {
             log.error(ExceptionUtil.getExceptionInfo(e));
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return result;
@@ -124,7 +124,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -171,7 +171,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -224,7 +224,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -418,7 +418,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();            
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return true;
@@ -472,7 +472,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -612,7 +612,7 @@ public class InviteDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();            
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return true;

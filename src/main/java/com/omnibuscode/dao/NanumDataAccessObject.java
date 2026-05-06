@@ -65,7 +65,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -109,7 +109,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -169,7 +169,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
             conn.txRollBack();
             throw e;
         } finally {
-            conn.close();            
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
 
         return seqNanum;
@@ -229,7 +229,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
 				conn.txRollBack();
 				throw e;
 			} finally {
-				conn.close();
+				if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 			}
 		}
 	}
@@ -268,7 +268,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
 				conn.txRollBack();
 				throw e;
 			} finally {
-				conn.close();
+				if (conn != null) try { conn.close(); } catch (Exception ignored) {}
 			}
 		}
 	}
@@ -312,7 +312,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -360,7 +360,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
 
@@ -403,7 +403,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
     
@@ -435,7 +435,7 @@ public class NanumDataAccessObject extends CommonDataAccessObject {
             log.error(ExceptionUtil.getExceptionInfo(e));
             throw e;
         } finally {
-            conn.close();
+            if (conn != null) try { conn.close(); } catch (Exception ignored) {}
         }
     }
 }
