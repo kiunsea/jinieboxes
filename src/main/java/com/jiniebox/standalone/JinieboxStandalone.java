@@ -90,8 +90,10 @@ public class JinieboxStandalone {
      * <ol>
      *   <li>{@code -Djiniebox.webapp.dir=...} 가 지정되면 그 디렉토리 (gradle runStandalone 가
      *       WEB-INF/lib 를 뺀 사본을 만들고 가리킨다 — 클래스로더 충돌 방지)</li>
-     *   <li>현재 작업 디렉토리에 {@code src/main/webapp} 가 있으면 사용 (raw 개발 모드)</li>
-     *   <li>그 외엔 jar 안에 임베드된 {@code /webapp/...} 리소스를 {@code dataDir/webapp/} 로 추출</li>
+     *   <li>jar 에서 실행 중이면 무조건 jar 안에 임베드된 {@code /webapp/...} 리소스를
+     *       {@code dataDir/webapp/} 로 추출하여 사용. cwd 의 {@code src/main/webapp} 는
+     *       WEB-INF/lib 가 standalone classpath 와 충돌(log4j 등)하므로 사용하지 않는다.</li>
+     *   <li>그 외(클래스 디렉토리에서 직접 실행하는 raw 개발 모드)에 한해 {@code src/main/webapp} 사용</li>
      * </ol>
      */
     private static File resolveDocBase(File dataDir) throws IOException {
@@ -102,17 +104,39 @@ public class JinieboxStandalone {
                 return f.getAbsoluteFile();
             }
         }
+
+        if (isRunningFromJar()) {
+            File extracted = new File(dataDir, "webapp");
+            if (!extracted.exists() && !extracted.mkdirs()) {
+                throw new IOException("webapp 추출 디렉토리를 만들 수 없습니다: " + extracted);
+            }
+            extractEmbeddedWebapp(extracted);
+            return extracted;
+        }
+
         File devWebapp = new File("src/main/webapp");
         if (devWebapp.isDirectory()) {
             return devWebapp.getAbsoluteFile();
         }
 
+        // 마지막 시도: 클래스 모드인데 src/main/webapp 도 없을 때 → 추출 시도
         File extracted = new File(dataDir, "webapp");
         if (!extracted.exists() && !extracted.mkdirs()) {
-            throw new IOException("webapp 추출 디렉토리를 만들 수 없습니다: " + extracted);
+            throw new IOException("webapp 디렉토리를 찾을 수 없습니다 (jiniebox.webapp.dir / src/main/webapp / 임베드된 리소스 모두 부재)");
         }
         extractEmbeddedWebapp(extracted);
         return extracted;
+    }
+
+    /** 현재 실행이 jar 파일에서 이뤄지고 있는지 (vs IDE/gradle classes 디렉토리). */
+    private static boolean isRunningFromJar() {
+        try {
+            String path = JinieboxStandalone.class.getProtectionDomain()
+                    .getCodeSource().getLocation().getPath();
+            return path != null && path.toLowerCase().endsWith(".jar");
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
