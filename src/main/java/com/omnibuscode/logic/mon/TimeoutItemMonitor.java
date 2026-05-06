@@ -38,6 +38,15 @@ public class TimeoutItemMonitor implements Runnable {
 	        } catch (Exception e) {
 	            log.error(ExceptionUtil.getExceptionInfo(e));
 	        }
+	        if (boxes == null) {
+	            // DB 미설정/연결 실패 등으로 조회 불가 — 다음 주기까지 sleep
+	            try {
+	                Thread.sleep(1000 * 60 * 60 * 24);
+	            } catch (Exception e) {
+	                log.error(ExceptionUtil.getExceptionInfo(e));
+	            }
+	            continue;
+	        }
 	        Iterator<JSONObject> boxIter = boxes.iterator();
 	        JSONObject boxInfo = null;
 	        String seqBox = null;

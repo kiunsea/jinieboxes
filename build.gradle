@@ -4,6 +4,9 @@ plugins {
 	id 'eclipse'
 	id 'eclipse-wtp'
 	id 'org.gretty' version '4.1.0'
+	// fat jar 빌드 시 META-INF/services 와 log4j2 plugin 캐시(Log4j2Plugins.dat) 를
+	// 의존성 jar 들로부터 자동으로 병합한다.
+	id 'com.gradleup.shadow' version '8.3.5'
 }
 
 group = 'com.jiniebox'
@@ -156,7 +159,18 @@ task runStandalone(type: JavaExec) {
 // 배포용 fat jar: 임베디드 Tomcat + 모든 런타임 의존성 + webapp 리소스 임베드
 //   결과물: build/libs/jiniebox-<version>-standalone.jar
 //   실행: java -jar build/libs/jiniebox-<version>-standalone.jar [options]
-task standaloneJar(type: Jar) {
+//
+// shadowJar plugin 사용 이유:
+//   단순 Jar task 의 duplicatesStrategy=EXCLUDE 는 META-INF/services/* 와
+//   META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat 가
+//   여러 의존성 jar 에 중복으로 들어 있을 때 첫 번째만 사용하여 다른 jar 의 항목이
+//   누락된다. 결과로 log4j2 PatternLayout 등이 'Unrecognized format specifier'
+//   오류를 내며 동작하지 않는다. ShadowJar 의 mergeServiceFiles 와 transform 이
+//   이 메타파일들을 자동으로 합쳐 준다.
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
+
+task standaloneJar(type: ShadowJar) {
     group = 'application'
     description = '임베디드 Tomcat 포함 standalone fat jar 생성 (java -jar 로 실행 가능)'
     dependsOn classes
@@ -170,12 +184,8 @@ task standaloneJar(type: Jar) {
     // 1. 컴파일된 메인 클래스 + 리소스
     from sourceSets.main.output
 
-    // 2. 모든 런타임 + 임베드 Tomcat 의존성을 풀어서 fat jar 안에 합치기
-    from {
-        (configurations.runtimeClasspath + configurations.tomcatEmbed).collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
+    // 2. 모든 런타임 + 임베드 Tomcat 의존성
+    configurations = [project.configurations.runtimeClasspath, project.configurations.tomcatEmbed]
 
     // 3. webapp 정적 리소스(JSP/HTML/CSS/JS/web.xml 등) 를 jar 의 webapp/ 에 임베드
     //    Main 이 부팅 시 dataDir/webapp/ 으로 추출하여 사용한다.
@@ -185,9 +195,14 @@ task standaloneJar(type: Jar) {
         exclude 'WEB-INF/lib/**'
     }
 
-    // 의존 jar 들의 서명/모듈 메타 정보 충돌 방지
+    // ServiceLoader 메타파일을 모두 합친다 (log4j-core 의 plugin lookup 등이 정상 동작하도록)
+    mergeServiceFiles()
+    // log4j2 의 plugin 캐시(Log4j2Plugins.dat) 도 합친다 — 이걸 빠뜨리면
+    // PatternLayout / Plugin 등이 모두 'Unrecognized' 오류를 낸다.
+    transform(Log4j2PluginsCacheFileTransformer)
+
+    // 의존 jar 들의 서명 메타 정보 충돌 방지
     exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
-    exclude 'META-INF/MANIFEST.MF'
     exclude 'module-info.class'
 }
 
