@@ -2,9 +2,11 @@ package com.omnibuscode.base;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Locale;
 
 import org.json.simple.JSONObject;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
@@ -59,16 +61,26 @@ public final class IntegrationGate {
     /**
      * 503 Service Unavailable + JSON 본문(코드/메시지)을 응답으로 쓴다.
      * 미설정된 외부 연동에 호출이 들어왔을 때 클라이언트가 명확히 인지할 수 있도록 한다.
+     * 메시지는 시스템 기본 locale 로 출력 (요청 locale 별로 출력하려면 오버로드 사용).
      */
-    @SuppressWarnings("unchecked")
     public static void writeDisabled(HttpServletResponse res, String integrationName) throws IOException {
+        writeDisabled(res, integrationName, Locale.getDefault());
+    }
+
+    /** 요청별 locale 로 503 응답을 작성. */
+    public static void writeDisabled(HttpServletRequest req, HttpServletResponse res, String integrationName) throws IOException {
+        writeDisabled(res, integrationName, I18n.localeOf(req));
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void writeDisabled(HttpServletResponse res, String integrationName, Locale locale) throws IOException {
         res.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         res.setCharacterEncoding("UTF-8");
         res.setContentType("application/json;charset=UTF-8");
         res.setHeader("Cache-Control", "no-cache");
         JSONObject body = new JSONObject();
         body.put("code", FEATURE_DISABLED);
-        body.put("msg", integrationName + " 연동이 설정되지 않았습니다");
+        body.put("msg", I18n.t("integration.disabled", locale, integrationName));
         PrintWriter out = res.getWriter();
         out.println(body);
         out.flush();
