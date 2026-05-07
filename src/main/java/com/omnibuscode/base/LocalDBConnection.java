@@ -12,8 +12,8 @@ import java.sql.Statement;
  */
 public class LocalDBConnection {
 
-	// JDBC정보를 셋팅한다.
-	private final String className = "com.mysql.jdbc.Driver";
+	// MySQL Connector/J 8.x 의 Driver 클래스 (구 com.mysql.jdbc.Driver 는 deprecated)
+	private final String className = "com.mysql.cj.jdbc.Driver";
 
 	private Connection conn = null;
 	private Statement stmt = null;

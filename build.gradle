@@ -99,7 +99,10 @@ dependencies {
 	implementation files('src/main/webapp/WEB-INF/lib/log4j-1.2-api-2.20.0.jar')
 	implementation files('src/main/webapp/WEB-INF/lib/log4j-api-2.20.0.jar')
 	implementation files('src/main/webapp/WEB-INF/lib/log4j-core-2.20.0.jar')
-	implementation files('src/main/webapp/WEB-INF/lib/mysql-connector-java-5.0.6-bin.jar')
+	// MySQL/MariaDB JDBC 드라이버
+	// 기존 mysql-connector-java-5.0.6-bin.jar (2008년) 는 보안 취약점 다수.
+	// MySQL Connector/J 8.x 로 교체 (Maven Central, Driver class: com.mysql.cj.jdbc.Driver)
+	implementation 'com.mysql:mysql-connector-j:8.4.0'
 	// tomcat-coyote.jar 는 소스 코드에서 직접 참조하지 않으므로 compileOnly 로 격리한다.
 	// (WAR 배포 시 Tomcat 컨테이너가 자체 coyote 를 제공, standalone 시엔 tomcat-embed-core 가 제공)
 	compileOnly files('src/main/webapp/WEB-INF/lib/tomcat-coyote.jar')

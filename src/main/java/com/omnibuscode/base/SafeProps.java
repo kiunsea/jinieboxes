@@ -31,9 +31,30 @@ public final class SafeProps {
 
     private SafeProps() {}
 
-    /** True if the key has a non-blank value. */
+    /**
+     * Resolves the raw value for a key with this priority (12-factor friendly):
+     * <ol>
+     *   <li>System property {@code jiniebox.<key.toLowerCase>} (e.g. {@code jiniebox.localdb_url})</li>
+     *   <li>Environment variable with the same key name (e.g. {@code LOCALDB_URL})</li>
+     *   <li>Value from {@link PropertiesUtil} (JINIEBOX.PROPERTIES)</li>
+     * </ol>
+     * Returns {@code null} if the value is missing/blank in all sources.
+     */
+    private static String resolve(String key) {
+        if (key == null) return null;
+        // 1. -D system property (소문자 prefix 'jiniebox.' 권장)
+        String v = blankToNull(System.getProperty("jiniebox." + key.toLowerCase()));
+        if (v != null) return v;
+        // 2. environment variable (예: KAKAO_REST_API_KEY)
+        v = blankToNull(System.getenv(key));
+        if (v != null) return v;
+        // 3. PROPERTIES 파일
+        return blankToNull(PropertiesUtil.get(key));
+    }
+
+    /** True if the key has a non-blank value (system property / env var / PROPERTIES 중 어디든). */
     public static boolean isSet(String key) {
-        return blankToNull(PropertiesUtil.get(key)) != null;
+        return resolve(key) != null;
     }
 
     /** Trimmed value, or {@code null} if missing/blank. Logs missing once. */
@@ -42,7 +63,7 @@ public final class SafeProps {
     }
 
     public static String getString(String key, String defaultValue) {
-        String v = blankToNull(PropertiesUtil.get(key));
+        String v = resolve(key);
         if (v == null) {
             warnMissing(key);
             return defaultValue;
@@ -50,9 +71,9 @@ public final class SafeProps {
         return v;
     }
 
-    /** Throws {@link IllegalStateException} if the key is missing. */
+    /** Throws {@link IllegalStateException} if the key is missing in all sources. */
     public static String getRequired(String key) {
-        String v = blankToNull(PropertiesUtil.get(key));
+        String v = resolve(key);
         if (v == null) {
             throw new IllegalStateException("Required property is missing: " + key);
         }
@@ -60,7 +81,7 @@ public final class SafeProps {
     }
 
     public static int getInt(String key, int defaultValue) {
-        String v = blankToNull(PropertiesUtil.get(key));
+        String v = resolve(key);
         if (v == null) {
             warnMissing(key);
             return defaultValue;
@@ -74,7 +95,7 @@ public final class SafeProps {
     }
 
     public static long getLong(String key, long defaultValue) {
-        String v = blankToNull(PropertiesUtil.get(key));
+        String v = resolve(key);
         if (v == null) {
             warnMissing(key);
             return defaultValue;
@@ -88,7 +109,7 @@ public final class SafeProps {
     }
 
     public static boolean getBool(String key, boolean defaultValue) {
-        String v = blankToNull(PropertiesUtil.get(key));
+        String v = resolve(key);
         if (v == null) {
             warnMissing(key);
             return defaultValue;
