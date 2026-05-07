@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <!-- 로그 출력 방식 -->
+    <Properties>
+        <Property name="LOG_DIR">${sys:jiniebox.logs.dir:-C:/LOGS}</Property>
+        <Property name="LOG_PATTERN">%d %-5p [%t] %C{2} (%F:%L) - %m%n</Property>
+        <Property name="MAX_FILE_SIZE">50MB</Property>
+        <Property name="MAX_BACKUP">14</Property>
+    </Properties>
+
+    <!-- 로그 출력 방식 -->
     <Appenders>
         <!-- 콘솔 출력 방식 -->
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
         </Console>
-        <!-- 파일 저장 방식 -->
-        <File name="FILE_AUTH" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_DEV_AUTH.log">
-              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
-        </File>
-        <File name="FILE_DEV" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_DEV_COMM.log">
-              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
-        </File>
+
+        <!-- 파일 저장 방식 (RollingFile: 50MB 마다 회전, 최대 14개 보관) -->
+        <RollingFile name="FILE_AUTH"
+                     fileName="${LOG_DIR}/JINIEBOX_DEV_AUTH.log"
+                     filePattern="${LOG_DIR}/JINIEBOX_DEV_AUTH-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${MAX_BACKUP}"/>
+        </RollingFile>
+
+        <RollingFile name="FILE_DEV"
+                     fileName="${LOG_DIR}/JINIEBOX_DEV_COMM.log"
+                     filePattern="${LOG_DIR}/JINIEBOX_DEV_COMM-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${MAX_BACKUP}"/>
+        </RollingFile>
     </Appenders>
     
     <Loggers>

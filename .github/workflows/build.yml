@@ -1,0 +1,96 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Compile
+        run: ./gradlew compileJava --no-daemon
+
+      - name: Build WAR
+        run: ./gradlew war --no-daemon
+
+      - name: Build standalone fat jar
+        run: ./gradlew standaloneJar --no-daemon
+
+      - name: Verify standalone jar exists
+        run: |
+          ls -lh build/libs/*.jar
+          test -f build/libs/jinieboxes-*-standalone.jar
+          test -f build/libs/jinieboxes-*.war
+
+      - name: Smoke test (boot standalone, probe HTTP, shutdown)
+        run: |
+          set -e
+          mkdir -p data
+          # 백그라운드로 standalone 시작
+          nohup java -Dfile.encoding=UTF-8 \
+            -jar build/libs/jinieboxes-*-standalone.jar \
+            --port=18080 \
+            --data-dir=./data \
+            > data/server.log 2>&1 &
+          SERVER_PID=$!
+          echo "started PID=$SERVER_PID"
+
+          # HTTP 200 응답 대기 (최대 60초)
+          for i in $(seq 1 30); do
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:18080/jbs/ || true)
+            if [ "$CODE" = "200" ]; then
+              echo "HTTP 200 (after ${i}*2s)"
+              break
+            fi
+            sleep 2
+          done
+
+          if [ "$CODE" != "200" ]; then
+            echo "[FAIL] / 가 200 을 반환하지 않음 (last code: $CODE)"
+            tail -200 data/server.log
+            kill $SERVER_PID 2>/dev/null || true
+            exit 1
+          fi
+
+          # signin.jsp / signup.jsp 도 200 인지
+          for path in signin.jsp signup.jsp; do
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:18080/jbs/$path)
+            if [ "$CODE" != "200" ]; then
+              echo "[FAIL] /jbs/$path 응답: $CODE"
+              tail -200 data/server.log
+              kill $SERVER_PID 2>/dev/null || true
+              exit 1
+            fi
+            echo "OK /jbs/$path = $CODE"
+          done
+
+          kill $SERVER_PID 2>/dev/null || true
+          echo "[PASS] smoke test"
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            data/server.log
+            build/reports/
+          retention-days: 7

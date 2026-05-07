@@ -1,23 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
+    <Properties>
+        <Property name="LOG_DIR">${sys:jiniebox.logs.dir:-C:/LOGS}</Property>
+        <Property name="LOG_PATTERN">%d %-5p [%t] %C{2} (%F:%L) - %m%n</Property>
+        <Property name="MAX_FILE_SIZE">100MB</Property>
+        <Property name="MAX_BACKUP">30</Property>
+    </Properties>
+
     <!-- 로그 출력 방식 -->
     <Appenders>
         <!-- 콘솔 출력 방식 -->
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
         </Console>
-        
-        <!-- 파일 저장 방식 -->
-        <File name="FILE_AUTH" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_AUTH.log">
-              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
-        </File>
-        <File name="FILE_COMM" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_COMM.log">
-              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
-        </File>
+
+        <!-- 파일 저장 방식 (RollingFile: 100MB 마다 회전, 최대 30개 보관) -->
+        <RollingFile name="FILE_AUTH"
+                     fileName="${LOG_DIR}/JINIEBOX_AUTH.log"
+                     filePattern="${LOG_DIR}/JINIEBOX_AUTH-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${MAX_BACKUP}"/>
+        </RollingFile>
+
+        <RollingFile name="FILE_COMM"
+                     fileName="${LOG_DIR}/JINIEBOX_COMM.log"
+                     filePattern="${LOG_DIR}/JINIEBOX_COMM-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${MAX_BACKUP}"/>
+        </RollingFile>
+
         <!-- FTP 패키지 전용 로그 파일 -->
-        <File name="FILE_FTP" fileName="${sys:jiniebox.logs.dir:-C:/LOGS}/JINIEBOX_FTP.log">
-              <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" charset="UTF-8"/>
-        </File>
+        <RollingFile name="FILE_FTP"
+                     fileName="${LOG_DIR}/JINIEBOX_FTP.log"
+                     filePattern="${LOG_DIR}/JINIEBOX_FTP-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${MAX_BACKUP}"/>
+        </RollingFile>
     </Appenders>
     
     <Loggers>
