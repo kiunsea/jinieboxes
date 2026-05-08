@@ -14,10 +14,18 @@ FLUSH PRIVILEGES;
 
 ## 2. 스키마 적용
 
-> **TODO**: 운영 환경에서 `mysqldump --no-data --routines jiniebox > doc/db/schema.sql` 명령으로 스키마 덤프를 생성해 본 디렉토리에 추가해야 합니다. 이후 다음 명령으로 적용합니다:
+리포에 포함된 [db/schema.sql](../db/schema.sql) (운영 DB 의 mysqldump 결과, MariaDB 11.x) 을
+다음 명령으로 적용합니다:
 
 ```bash
-mysql -u jiniebox -p jiniebox < doc/db/schema.sql
+mysql -u jiniebox -p jiniebox < db/schema.sql
+```
+
+스키마는 데이터 없이 테이블 구조 + 루틴/트리거/이벤트만 포함합니다.
+운영 환경에서 새로 덤프하려면:
+
+```bash
+mysqldump --no-data --routines --triggers --events -u <user> -p jiniebox > db/schema.sql
 ```
 
 ## 3. JINIEBOX.PROPERTIES 설정
@@ -42,5 +50,5 @@ DB 설정이 누락되었습니다. JINIEBOX.PROPERTIES 의 LOCALDB_URL/LOCALDB_
 
 ## 참고
 
-- JDBC 드라이버는 `mysql-connector-java-5.0.6` 이 번들되어 있으나 보안 이슈가 있어 향후 8.x 로 교체 예정입니다.
+- JDBC 드라이버는 `com.mysql:mysql-connector-j:8.4.0` (Maven Central) 사용. 드라이버 클래스: `com.mysql.cj.jdbc.Driver`
 - DB 자체가 없어도 서버는 부팅됩니다 (외부 연동 graceful degradation 적용). 다만 사용자 인증/박스 등 핵심 기능 사용 시 위 에러가 발생합니다.
